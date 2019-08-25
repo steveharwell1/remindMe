@@ -7,9 +7,9 @@
     <title>Remind Me!</title>
 </head>
 <body>
- <header>
-    <nav>
-        <a>Link 1</a>
-        <a>Link 2</a>
-    </nav>
-</header>  
+    <header>
+        <nav>
+            <a>Link 1</a>
+            <a>Link 2</a>
+        </nav>
+    </header>  
