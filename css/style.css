@@ -2,7 +2,7 @@
     padding: 0;
     margin: 0;
 }
-html {
+:root {
     color: darkblue;
     background: #e8e8e8;
 }
