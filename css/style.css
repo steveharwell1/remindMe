@@ -10,3 +10,6 @@
 nav {
     display: flex;
 }
+nav {
+    padding: 10px;
+}
