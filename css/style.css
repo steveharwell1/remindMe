@@ -10,6 +10,6 @@
 nav {
     display: flex;
 }
-nav {
+nav > * {
     padding: 10px;
 }
