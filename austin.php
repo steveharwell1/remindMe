@@ -4,7 +4,7 @@
   include 'templates/header.php';
 
   $name = 'Austin';
-  echo "This is the $name App. This is PHP!";
+  echo "This is the $name App. This is PHP!\n";
   echo "LET'S GET THIS BREAD!!";
 
 
