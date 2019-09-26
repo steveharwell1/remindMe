@@ -5,8 +5,7 @@
 
   $name = 'Austin';
   echo "This is the $name App. This is PHP!<br>";
-  echo "I'm trying to change things.";
-  echo "TEst";
+  echo "This is a test personal web page";
   
 
   include 'templates/footer.php'
