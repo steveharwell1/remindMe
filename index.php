@@ -5,6 +5,7 @@
 
   $name = 'Remind Me';
   echo "This is the $name App. This is PHP!";
+  echo "<br>Testing...";
 
   $sql = "SELECT * FROM test_table_0";
   if (!$result = $db->query($sql)) {
