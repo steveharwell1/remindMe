@@ -12,7 +12,13 @@
   } else {
     tablify($result);
   }
+  ?>
 
+<div id="cal-container">
+
+</div>
+
+<?php
   include 'templates/footer.php'
 ?>
 
