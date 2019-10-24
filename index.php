@@ -17,6 +17,12 @@
   
   ?>!
 </div>
+<div id="CategoryView"> 
+<?php
+  include 'templates/CategoryView.php'
+?>
+
+</div>
 
 <?php
   include 'templates/footer.php'
