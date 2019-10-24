@@ -21,8 +21,20 @@
 <?php
   include 'templates/CategoryView.php'
 ?>
-
 </div>
+
+<div id = "groupView">
+<?php
+  include 'templates/groupView.php'
+?>
+</div>
+
+<div id = "jobView">
+<?php
+  include 'templates/jobView.php'
+?>
+</div>
+
 
 <?php
   include 'templates/footer.php'
