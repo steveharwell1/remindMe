@@ -6,8 +6,8 @@ include_once 'error_msg.php';
 if (isset($_POST['submit'])) {
     include_once '../db/test_db.php';
 
-    $email = mysqli_real_escape_string($db, $_POST['email']);
-    $passwd = mysqli_real_escape_string($db, $_POST['passwd']);
+    $email = $db->real_escape_string($_POST['email']);
+    $passwd = $db->real_escape_string($_POST['passwd']);
 
     if(empty($email) || empty($passwd)) {
         log_error('Password or Email are empty!');
