@@ -6,16 +6,6 @@
   ?>
 
 <div id="cal-container">
-  Hello <?php
-  if (isset($_SESSION['user_id']))
-  {
-    echo $_SESSION['user_first_name'];
-  }
-  else {
-    echo "You are not logged in!";
-  }
-  
-  ?>!
 </div>
 <div id="CategoryView"> 
 <?php
