@@ -1,4 +1,3 @@
-<list>
 <h2>CATEGORY VIEW</h2>
 <ul>
   <li>G1: Category Name</li>
@@ -12,4 +11,4 @@
       <li>Job 2</li>
     </ul>
 </ul>
-</list>
+
