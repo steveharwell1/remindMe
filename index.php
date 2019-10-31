@@ -6,7 +6,10 @@
   ?>
 
 <div id="cal-container">
-</div>
+<?php
+  include 'templates/calendarView.php';
+?>
+  </div>
 <div id="CategoryView"> 
 <?php
   include 'templates/CategoryView.php'
