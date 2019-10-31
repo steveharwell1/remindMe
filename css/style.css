@@ -13,3 +13,10 @@ nav {
 nav > * {
     padding: 10px;
 }
+
+#cal-table {
+    width: 100%;
+}
+#cal-table tr, #cal-table th {
+    width: calc(100%/7);
+}
