@@ -31,7 +31,7 @@ function makeDayTable(month, year) {
     firstDay = new Date(year, month);
     monthElem.innerText = monthNames[firstDay.getMonth()] + " " + firstDay.getFullYear();
     blanks = firstDay.getDay();
-    numDays = new Date(year, month, 0).getDate();
+    numDays = new Date(year, month+1, 0).getDate();//add one to month because 0th day is last day of previous month.
     firstRow = document.createElement('tr');
     
     
@@ -50,6 +50,7 @@ function makeDayTable(month, year) {
 
     //add 
     currentRow = firstRow;
+    //console.log(numDays);
     for(i = 1; i < numDays + 1; i++){
         if((blanks + i) % 7 == 1){
             currentRow = document.createElement('tr');
