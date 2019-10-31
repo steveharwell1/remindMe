@@ -65,8 +65,8 @@ form {
         <option value = "assignment">Assignment</option>
     </select><br>
     <textarea placeholder = "Comments/Info"></textarea>
-    <button type = "submit" form = "jobform" value = "Save">Save</button>
-    <button type = "reset" form = "jobform" value = "Cancel">Cancel</button>
+    <button type = "button" form = "jobform" value = "Save">Save</button>
+    <button type = "button" form = "jobform" value = "Cancel">Cancel</button>
 </form>
 
 </body>
