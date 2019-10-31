@@ -20,3 +20,28 @@ nav > * {
 #cal-table tr, #cal-table th {
     width: calc(100%/7);
 }
+
+input:not([type = "radio"]) {
+    border: none;
+    border-bottom: 1px solid black;
+    margin: 10px;
+    margin-left: 0px;
+}
+textarea {
+    border: 1px solid black;
+    height: 75px;
+    width: 300px;
+    margin: 10px;
+    margin-left: 0px;
+}
+select {
+    border: none;
+    border-bottom: 1px solid black;
+    margin: 10px;
+    margin-left: 0px;
+}
+form {
+    border: 1px solid black;
+    padding: 10px;
+    width: 300px;
+}

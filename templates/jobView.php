@@ -1,35 +1,3 @@
-<html>
-<head>
-<style>
-
-input:not([type = "radio"]) {
-    border: none;
-    border-bottom: 1px solid black;
-    margin: 10px;
-    margin-left: 0px;
-}
-textarea {
-    border: 1px solid black;
-    height: 75px;
-    width: 300px;
-    margin: 10px;
-    margin-left: 0px;
-}
-select {
-    border: none;
-    border-bottom: 1px solid black;
-    margin: 10px;
-    margin-left: 0px;
-}
-form {
-    border: 1px solid black;
-    padding: 10px;
-    width: 300px;
-}
-</style>
-</head>
-
-<body>
 <form method = "post" id = "jobform">
     Job Name<br>
     <input type = "text" name = "jobname"><br>
@@ -68,6 +36,3 @@ form {
     <button type = "button" form = "jobform" value = "Save">Save</button>
     <button type = "button" form = "jobform" value = "Cancel">Cancel</button>
 </form>
-
-</body>
-</html>
