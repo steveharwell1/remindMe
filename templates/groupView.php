@@ -1,4 +1,1 @@
-<list>
-
-
-</list>
+<h2>My Groups</h2>

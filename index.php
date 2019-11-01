@@ -9,24 +9,24 @@
 <?php
   include 'templates/calendarView.php';
 ?>
-  </div>
+</div>
 <div id="CategoryView"> 
 <?php
   include 'templates/CategoryView.php'
 ?>
 </div>
-
 <div id = "groupView">
 <?php
   include 'templates/groupView.php'
 ?>
 </div>
 
-<div id = "jobView">
+
+
+<!-- overlays below here -->
 <?php
   include 'templates/jobView.php'
 ?>
-</div>
 
 
 <?php
