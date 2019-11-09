@@ -32,13 +32,9 @@ addGroupReq.addEventListener("load", addGroupCallback);
 //This is the event that sends the message to the server.
 addGroup.addEventListener('click', function(){
     console.log('sending message');
-<<<<<<< HEAD
     addGroupReq.open("POST", "/templates/groupController.php");
     groupNameText = document.getElementById('addGroupName').value;
-=======
-    addGroupReq.open("POST", "/controllers/groupController.php");
-    name = document.getElementById('addGroupName');
->>>>>>> 8742f8a01156c47c2f7ef15f4882b495b497f5b4
+
 
 
     //setting the header so that JSON will be sent. Both directions of communication will be json.
