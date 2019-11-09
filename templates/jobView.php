@@ -34,5 +34,6 @@
     </select><br>
     <textarea placeholder = "Comments/Info"></textarea>
     <button type = "button" form = "jobform" value = "Save">Save</button>
+    <button type = "button" form = "jobform" value = "Delete">Delete</button>
     <button type = "button" form = "jobform" value = "Cancel">Cancel</button>
 </form>
