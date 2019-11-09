@@ -25,9 +25,16 @@ $id = $_SESSION['user_id'];
 $group = Array('name' => 'Birthday Planning');
 
 //Send Data at the end
-$data = array( 'data' => $contents, 'action' => 'create');
+$data = Array( 'data' => $contents, 'action' => 'create');
 header('Content-Type: application/json');
 echo json_encode($data);
+
+//Insert data into the database
+$groupName = $group['name'];
+$sql = "INSERT INTO `GROUPS` 
+(`GROUP_NAME`, `GROUP_OWNER`, `SUPER_GROUP`) 
+VALUES ($groupName, $id, NULL);";
+$result = mysqli_query($db, $sql);
 
 
 //close result array
