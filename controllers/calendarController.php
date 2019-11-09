@@ -22,7 +22,10 @@ $id = $_SESSION['user_id'];
 
 
 //turn sql result into php array object
-$group = Array('name' => 'Birthday Planning');
+$month = Array();
+for($i = 0; $i < 30; $i++){
+    array_push($month, Array("Reminder $i"));
+}
 
 //Send Data at the end
 $data = array( 'data' => $group, 'action' => 'create');
