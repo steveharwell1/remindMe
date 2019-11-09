@@ -39,6 +39,10 @@ header {
     display: grid;
     grid-template-rows: 5vh 1fr;
     grid-template-columns: 3fr 1fr 1fr;
+
+    overflow-y: scroll;
+    overflow-x: hidden;
+
 }
 
 #CategoryView {
@@ -74,7 +78,9 @@ header {
     border: 1px solid black;
 }
 
-
+tr {
+    height: 18vh;
+}
 
 
 input:not([type = "radio"]) {
