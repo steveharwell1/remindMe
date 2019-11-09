@@ -3,10 +3,10 @@
   include 'utils/debug.php';
   include 'templates/header.php';
 
-  $name = 'Austin';
+  $name = 'Josena :)';
   echo "This is the $name App. This is PHP!<br>";
-  echo "This is a test personal web page";
-  echo "Testing to see how affects branch";
+  echo "I'm trying to change things.";
+  echo "<br>Let's get this bread!!";
   
 
   include 'templates/footer.php'

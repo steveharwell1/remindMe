@@ -1,18 +1,35 @@
 <?php 
+  include_once 'utils/login_required.php';
   include_once 'db/test_db.php';
   include 'utils/debug.php';
   include 'templates/header.php';
+  ?>
 
-  $name = 'Remind Me';
-  echo "This is the $name App. This is PHP!";
+<div id="cal-container">
+<?php
+  include 'templates/calendarView.php';
+?>
+</div>
+<div id="CategoryView"> 
+<?php
+  include 'templates/CategoryView.php'
+?>
+</div>
+<div id = "groupView">
+<?php
+  include 'templates/groupView.php'
+?>
+</div>
 
-  $sql = "SELECT * FROM test_table_0";
-  if (!$result = $db->query($sql)) {
-    echo "An error happened".$db->error;
-  } else {
-    tablify($result);
-  }
 
+
+<!-- overlays below here -->
+<?php
+  include 'templates/jobView.php'
+?>
+
+
+<?php
   include 'templates/footer.php'
 ?>
 

@@ -4,7 +4,9 @@
   include 'templates/header.php';
 
   $name = 'Steve';
-  echo "This is the $name App. This is PHP! dff";
+
+  echo "This is the $name App. This is PHP! steve layout";
+
 
 
   include 'templates/footer.php'
