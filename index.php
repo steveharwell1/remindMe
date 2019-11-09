@@ -10,16 +10,17 @@
   include 'templates/calendarView.php';
 ?>
 </div>
-<div id="CategoryView"> 
-<?php
-  include 'templates/CategoryView.php'
-?>
-</div>
 <div id = "groupView">
 <?php
   include 'templates/groupView.php'
 ?>
 </div>
+<div id="CategoryView"> 
+<?php
+  include 'templates/CategoryView.php'
+?>
+</div>
+
 
 
 
