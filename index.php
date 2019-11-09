@@ -26,7 +26,7 @@
 
 <!-- overlays below here -->
 <?php
-  include 'templates/jobView.php'
+  //include 'templates/jobView.php'
 ?>
 
 
