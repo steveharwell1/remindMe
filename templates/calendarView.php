@@ -1,7 +1,7 @@
 <h2 id="monthName"></h2>
 <button id="prevMonth" type="button">Previous</button>
 <button id="nextMonth" type="button">Next</button>
-<form id="addReminderForm" action="controllers/jobController.php" method="POST" style="display: none;"><input id="addReminderDate" name="date"/></form>
+<form id="addReminderForm" action="templates/jobView.php" method="POST" style="display: none;"><input id="addReminderDate" name="date"/></form>
 <table id="cal-table">
     <thead>
         <tr>
