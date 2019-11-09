@@ -1,6 +1,7 @@
 <h2 id="monthName"></h2>
 <button id="prevMonth" type="button">Previous</button>
 <button id="nextMonth" type="button">Next</button>
+<form id="addReminderForm" action="controllers/jobController.php" method="POST" style="display: none;"><input id="addReminderDate" name="date"/></form>
 <table id="cal-table">
     <thead>
         <tr>
@@ -59,7 +60,17 @@ function makeDayTable(month, year) {
         currentDay = document.createElement('td');
         currentDay.classList.add("day");
 
+        addReminder = document.createElement('button');
+        addReminder.innerText = '+';
+        d = new Date(year, month, i);
+        addReminder.value = d.toDateString();
+        addReminder.addEventListener('click', function() {
+            //alert(this.value);
+            document.getElementById('addReminderDate').value = this.value;
+            document.getElementById('addReminderForm').submit();
+        });
         currentDay.innerText = i;
+        currentDay.appendChild(addReminder);
         currentRow.appendChild(currentDay);
 
         dayElements.push(currentDay);
@@ -68,7 +79,8 @@ function makeDayTable(month, year) {
 
 function populateTable(month, year) {
     //call controller here.
-    dayElements[6].innerText += " Example Reminder";
+    txt = document.createTextNode('Example Reminder')
+    dayElements[6].appendChild(txt);
 };
 var date = new Date();
 date.setDate(1);//all months have a day 1
