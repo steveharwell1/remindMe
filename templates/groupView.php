@@ -32,7 +32,7 @@ addGroupReq.addEventListener("load", addGroupCallback);
 //This is the event that sends the message to the server.
 addGroup.addEventListener('click', function(){
     console.log('sending message');
-    addGroupReq.open("POST", "/templates/groupController.php");
+    addGroupReq.open("POST", "/controllers/groupController.php");
     name = document.getElementById('addGroupName');
 
 
