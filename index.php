@@ -29,7 +29,9 @@
   //include 'templates/jobView.php'
 ?>
 
-
+<script>
+document.getElementsByTagName("body")[0].id = "outergrid";
+</script>
 <?php
   include 'templates/footer.php'
 ?>
