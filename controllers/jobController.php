@@ -21,6 +21,7 @@ $remindDateTime = date('Y-m-d H:i:s', strtotime("$remindDate $remindTime"));
 
 $sql = "INSERT INTO JOBS 
 ('JOB_ID', 'GROUP_ID', 'TITLE', 'MESSAGE', 'CREATION_DATE', 'REMINDER_TIME', 'REPEATS_EVERY', 'JOB_TYPE', 'EXPIRED')
-VALUES (NULL, $jobGroup, $jobName, $jobMessage, current_date, $remindDateTime, $remindRepeat, 'INFORMATIONAL', '0')";
+VALUES (NULL, $jobGroup, $jobName, $jobMessage, current_date, $remindDateTime, $remindRepeat, $jobType, '0')";
+$result = mysqli_query($sql);
 
 ?>
