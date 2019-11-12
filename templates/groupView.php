@@ -33,7 +33,7 @@
 
         <form action="deleteGroup.php" method="post">
 
-            Enter Group ID to delete:&nbsp;<input type="text" name="GROUP_ID" required><br><br>
+            Enter Group ID to delete:&nbsp;<input type="text" name="GROUP_ID" required>
 
             <input type="submit" name="delete" value="Delete Group">
 
