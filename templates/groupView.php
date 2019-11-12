@@ -1,11 +1,6 @@
-<?php
-include("test_db.php");
-error_reporting(0);
-?>
-
 <html>
 <head> 
-
+MY GROUPS
 </head>
 
 <body>
@@ -17,33 +12,7 @@ error_reporting(0);
 	<input type="submit" name="submit" value="Create"/>
 	</form>
 
-<?php
-if($_GET['submit'])
-{
-	$groupID = $_GET['GroupID'];
-	$groupName= $_GET['GroupName'];
-	$groupOwner= $_GET['GroupOwner`'];
-	$superGroup= $_GET['SuperGroup'];
-	
-	if($groupID!="" && $groupName!="" && $groupOwner!="" && $superGroup!="")
-	{
-		$query= "INSERT INTO GROUPS VALUES(`$groupID`, `$groupName`,
-				`$groupOwner`, `$superGroup`)";
-		$data= mysqli_query($db,$query);
-		
-		if($data)
-		{
-			echo "Data inserted into Database"
-		}
-	}
-	else
-	{
-		echo "All fields are required";
-	}
-}
 
-
-?>
 </body>
 
 </html>
