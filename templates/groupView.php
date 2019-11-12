@@ -3,7 +3,7 @@
 
 <body>
 	<form action ="" method="GET">
-	Group ID 	<input type="text" name="GroupID" value=""/>
+	Group ID 	<input type="text" name="GroupID" value=""/><br>
 	Group name	<input type="text" name="GroupName" value=""/><br>
 	Group owner	<input type="text" name="GroupOwner" value=""/><br>
 	Super group	<input type="text" name="SuperGroup" value=""/><br>
@@ -15,19 +15,10 @@
 
 </html>
 
-<!DOCTYPE html>
 
 <html>
 
-    <head>
-
-        <title>DELETE GROUP</title>
-
-        <meta charset="UTF-8">
-
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    </head>
+    <head>DELETE GROUP</head>
 
     <body>
 
