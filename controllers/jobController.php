@@ -25,9 +25,27 @@ $sql = "INSERT INTO JOBS
 VALUES (NULL, '$jobGroup', '$jobName', '$jobMessage', '$todayDate', '$remindDateTime', '$remindRepeat', '$jobType', '0')";
 $result = mysqli_query($db, $sql);
 
+$id = $db->insert_id;
 $sql = "INSERT INTO REMINDER
 (REMINDER_ID, JOB_ID, IS_SENT, SEND_AFTER)
-VALUES (NULL, NULL, '0', '$remindDateTime')";
+VALUES (NULL, '$id', '0', '$remindDateTime')";
 $result = mysqli_query($db, $sql);
+
+if ($jobCategory !== NULL) {
+    $sql = "INSERT INTO CATEGORY_ASSOC
+    (CATEGORY_ID, JOB_ID)
+    VALUES ('$jobCategory', '$id')";
+    $result = mysqli_query($db, $sql);
+}
+
+if ($jobType == "INFORMATIONAL") {
+
+} else if ($jobType == "EVENT") {
+
+} else if ($jobType == "DEADLINE") {
+
+} else if ($jobType == "TODO") {
+    
+}
 
 ?>
