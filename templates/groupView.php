@@ -43,5 +43,5 @@ if($_GET['submit'])
 
 ?>
 <?php
-include '/templates/footer.php';
+
 ?>
