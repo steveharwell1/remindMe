@@ -3,14 +3,17 @@
   include_once '../db/test_db.php';
   include '../utils/debug.php';
   include 'header.php';
+
+  $date = date('Y-m-d', $_POST['date']);
+
 ?>
 
-<form action = "jobController.php" method = "post" id = "jobform">
+<form action = "../controllers/jobController.php" method = "post" id = "jobform">
     Job Name<br>
     <input type = "text" name = "jobname"><br>
 
     Due Date<br>
-    <input type = "date" name = "duedate"><input type = "time" name = "duetime"><br>
+    <input type = "date" name = "duedate" value = "<?php echo $date?>" /><input type = "time" name = "duetime"><br>
 
     Reminder Date<br>
     <input type = "date" name = "remindDate"><input type = "time" name = "remindTime"><br>
@@ -38,25 +41,55 @@
         <option value = "EVENT">Event</option>
     </select><br>
     <select name = "Group">
-        <option value = "none" disabled selected>Select Group</option>
-        <option value = "none">None</option>
-        <option value = "work">Work</option>
-        <option value = "school">School</option>
-        <option value = "family">Family</option>
+        <?PHP
+            $userid = $_SESSION['user_id'];
+            #$usergroup = $_SESSION['group_id'];
+
+            $sql = "SELECT * 
+            FROM GROUPS 
+            INNER JOIN USERS_GROUPS 
+            ON GROUPS.GROUP_ID = USERS_GROUPS.GROUP_ID
+            WHERE MEMBER_ID = $userid";
+            $result = mysqli_query($db, $sql);
+
+            echo "<option value = 'NULL' disabled selected>Select Group</option>";
+            echo "<option value = 'NULL'>None</option>";
+
+            if ($result->num_rows > 0) {
+                while($row = $result->fetch_assoc()) {
+                    echo "<option value = " . $row['GROUP_ID'] . ">" . $row['GROUP_NAME'] . "</option>";
+                }
+            } else {
+                echo "<option value = 'NULL'></option>";
+            }
+
+        ?>
     </select>
     <select name = "Category">
-        <option value = "none" disabled selected>Select Category</option>
-        <option value = "none">None</option>
-        <option value = "birthday">Birthday</option>
-        <option value = "work">Work</option>
-        <option value = "assignment">Assignment</option>
+        <?PHP
+            $userid = $_SESSION['user_id'];
+
+            $sql = "SELECT * 
+            FROM CATEGORY
+            WHERE CATEGORY.USER_ID = $userid";
+            $result = mysqli_query($db, $sql);
+
+            echo "<option value = 'NULL' disabled selected>Select Category</option>";
+            echo "<option value = 'NULL'>None</option>";
+
+            if ($result->num_rows > 0) {
+                while($row = $result->fetch_assoc()) {
+                    echo "<option value = " . $row['CATEGORY_ID'] . ">" . $row['CATEGORY_NAME'] . "</option>";
+                }
+            } else {
+                echo "<option value = 'NULL'></option>";
+            }
+
+        ?>
     </select><br>
     <textarea name = "message" placeholder = "Comments/Info"></textarea>
     <button type = "submit" form = "jobform" value = "Save">Save</button>
     <button type = "button" form = "jobform" value = "Cancel">Cancel</button>
 </form>
 
-<?PHP
 
-
-?>
