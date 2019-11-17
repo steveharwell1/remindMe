@@ -49,8 +49,8 @@ if ($jobType == "INFORMATIONAL") {
     VALUES ('$id', '0')";
 } else if ($jobType == "EVENT") {
     $sql = "INSERT INTO EVENT_
-    (JOB_ID, BEGIN_TIME)
-    VALUES ('$id', '$jobDateTime')";
+    (JOB_ID, BEGIN_TIME, END_TIME, location)
+    VALUES ('$id', '$jobDateTime', '$jobDateTime', NULL)";
 } else if ($jobType == "DEADLINE") {
     $sql = "INSERT INTO DEADLINE
     (JOB_ID, IS_COMPLETE)
