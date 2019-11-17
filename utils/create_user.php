@@ -25,6 +25,10 @@ if(isset($_POST['submit'])) {
 
         //TODO: Test if person was added or not.
         if($result2){
+            $id = $db->insert_id;
+            //log_error('id'.$id);
+            $sql3 = "INSERT INTO GROUPS (GROUP_ID, GROUP_NAME, GROUP_OWNER, SUPER_GROUP) VALUES (NULL, '$first_name', $id, NULL)";
+            mysqli_query($db, $sql3);
             header('Location: ../login.php');
         } else {
             log_error('Email already used.');

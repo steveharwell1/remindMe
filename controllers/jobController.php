@@ -18,10 +18,16 @@ $jobMessage = mysqli_real_escape_string($db, $_POST["message"]);
 $jobType = mysqli_real_escape_string($db, $_POST["Type"]);
 
 $remindDateTime = date('Y-m-d H:i:s', strtotime("$remindDate $remindTime"));
+$todayDate = date("Y-m-d");
 
 $sql = "INSERT INTO JOBS 
-('JOB_ID', 'GROUP_ID', 'TITLE', 'MESSAGE', 'CREATION_DATE', 'REMINDER_TIME', 'REPEATS_EVERY', 'JOB_TYPE', 'EXPIRED')
-VALUES (NULL, $jobGroup, $jobName, $jobMessage, current_date, $remindDateTime, $remindRepeat, $jobType, '0')";
-$result = mysqli_query($sql);
+(JOB_ID, GROUP_ID, TITLE, COMMENT, CREATION_DATE, REMINDER_TIME, REPEATS_EVERY, JOB_TYPE, EXPIRED)
+VALUES (NULL, '$jobGroup', '$jobName', '$jobMessage', '$todayDate', '$remindDateTime', '$remindRepeat', '$jobType', '0')";
+$result = mysqli_query($db, $sql);
+
+$sql = "INSERT INTO REMINDER
+(REMINDER_ID, JOB_ID, IS_SENT, SEND_AFTER)
+VALUES (NULL, NULL, '0', '$remindDateTime')";
+$result = mysqli_query($db, $sql);
 
 ?>
