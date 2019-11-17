@@ -4,7 +4,7 @@
   include '../utils/debug.php';
   include 'header.php';
 
-  $date = date('Y-m-d', $_POST['date']);
+  $date = $_POST['date'];
 
 ?>
 

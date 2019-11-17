@@ -21,13 +21,11 @@ if($_GET['submit'])
 	$groupName= $_GET['GroupName'];
 	$groupOwner= $_GET['GroupOwner'];
 	$superGroup= $_GET['SuperGroup'];
-	
 	if(!empty($_GET['GroupID']) && !empty($_GET['GroupName']) && $groupOwner!="" && $superGroup!="")
 	{
 		$query= "INSERT INTO GROUPS VALUES('$groupID', '$groupName',
 				'$groupOwner', '$superGroup')";
 		$data= mysqli_query($db,$query);
-		
 		if($data)
 		{
 			echo "Data inserted into Database";
