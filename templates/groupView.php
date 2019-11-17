@@ -32,7 +32,7 @@ if($_GET['submit'])
 		
 		if($data)
 		{
-			echo "Data inserted into Database"
+			echo "Data inserted into Database";
 		}
 	}
 	else
