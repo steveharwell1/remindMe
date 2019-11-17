@@ -1,39 +1,95 @@
-<form method = "post" id = "jobform">
+<?php 
+  include_once '../utils/login_required.php';
+  include_once '../db/test_db.php';
+  include '../utils/debug.php';
+  include 'header.php';
+
+  $date = date('Y-m-d', $_POST['date']);
+
+?>
+
+<form action = "../controllers/jobController.php" method = "post" id = "jobform">
     Job Name<br>
     <input type = "text" name = "jobname"><br>
-    Date/Time<br>
-    <input type = "date" name = "duedate"><input type = "time" name = "duetime"><br>
-    Reminder Time<br>
+
+    Due Date<br>
+    <input type = "date" name = "duedate" value = "<?php echo $date?>" /><input type = "time" name = "duetime"><br>
+
+    Reminder Date<br>
+    <input type = "date" name = "remindDate"><input type = "time" name = "remindTime"><br>
+
+    Repeat Every<br>
     <div style = "margin: 10px; margin-left: 0px">
-        <input type = "radio" id = "onTime" name = "remindTime" value = "onTime">
-        <label for = "onTime">On Time</label><br>
-        <input type = "radio" id = "30min" name = "remindTime" value = "30min">
-        <label for = "30">30 minutes before</label><br>
-        <input type = "radio" id = "1hour" name = "remindTime" value = "1hour">
-        <label for = "1hour">1 hour before</label><br>
-        <input type = "radio" id = "2hours" name = "remindTime" value = "2hours">
-        <label for = "2hours">2 hours before</label><br>
-        <input type = "radio" id = "1day" name = "remindTime" value = "1day">
-        <label for = "1day">1 day before</label><br>
-        <input type = "radio" id = "1week" name = "remindTime" value = "1week">
-        <label for = "1week">1 week before</label><br>
+        <input type = "radio" id = "ONCE" name = "repeat" value = "ONCE">
+        <label for = "ONCE">Once</label><br>
+        <input type = "radio" id = "DAY" name = "repeat" value = "DAY">
+        <label for = "DAY">Daily</label><br>
+        <input type = "radio" id = "WEEK" name = "repeat" value = "WEEK">
+        <label for = "WEEK">Weekly</label><br>
+        <input type = "radio" id = "BIWEEK" name = "repeat" value = "BIWEEK">
+        <label for = "BIWEEK">Every 2 Weeks</label><br>
+        <input type = "radio" id = "MONTH" name = "repeat" value = "MONTH">
+        <label for = "MONTH">Monthly</label><br>
+        <input type = "radio" id = "YEAR" name = "repeat" value = "YEAR">
+        <label for = "YEAR">Yearly</label><br>
     </div>
-    <select id = "Group">
-        <option value = "none" disabled selected>Select Group</option>
-        <option value = "none">None</option>
-        <option value = "work">Work</option>
-        <option value = "school">School</option>
-        <option value = "family">Family</option>
-    </select>
-    <select id = "Category">
-        <option value = "none" disabled selected>Select Category</option>
-        <option value = "none">None</option>
-        <option value = "birthday">Birthday</option>
-        <option value = "work">Work</option>
-        <option value = "assignment">Assignment</option>
+    <select name = "Type">
+        <option value = "none" disabled selected>Select Type</option>
+        <option value = "DEADLINE">Deadline</option>
+        <option value = "INFORMATIONAL">Informational</option>
+        <option value = "TODO">To Do</option>
+        <option value = "EVENT">Event</option>
     </select><br>
-    <textarea placeholder = "Comments/Info"></textarea>
-    <button type = "button" form = "jobform" value = "Save">Save</button>
-    <button type = "button" form = "jobform" value = "Delete">Delete</button>
+    <select name = "Group">
+        <?PHP
+            $userid = $_SESSION['user_id'];
+            #$usergroup = $_SESSION['group_id'];
+
+            $sql = "SELECT * 
+            FROM GROUPS 
+            INNER JOIN USERS_GROUPS 
+            ON GROUPS.GROUP_ID = USERS_GROUPS.GROUP_ID
+            WHERE MEMBER_ID = $userid";
+            $result = mysqli_query($db, $sql);
+
+            echo "<option value = 'NULL' disabled selected>Select Group</option>";
+            echo "<option value = 'NULL'>None</option>";
+
+            if ($result->num_rows > 0) {
+                while($row = $result->fetch_assoc()) {
+                    echo "<option value = " . $row['GROUP_ID'] . ">" . $row['GROUP_NAME'] . "</option>";
+                }
+            } else {
+                echo "<option value = 'NULL'></option>";
+            }
+
+        ?>
+    </select>
+    <select name = "Category">
+        <?PHP
+            $userid = $_SESSION['user_id'];
+
+            $sql = "SELECT * 
+            FROM CATEGORY
+            WHERE CATEGORY.USER_ID = $userid";
+            $result = mysqli_query($db, $sql);
+
+            echo "<option value = 'NULL' disabled selected>Select Category</option>";
+            echo "<option value = 'NULL'>None</option>";
+
+            if ($result->num_rows > 0) {
+                while($row = $result->fetch_assoc()) {
+                    echo "<option value = " . $row['CATEGORY_ID'] . ">" . $row['CATEGORY_NAME'] . "</option>";
+                }
+            } else {
+                echo "<option value = 'NULL'></option>";
+            }
+
+        ?>
+    </select><br>
+    <textarea name = "message" placeholder = "Comments/Info"></textarea>
+    <button type = "submit" form = "jobform" value = "Save">Save</button>
     <button type = "button" form = "jobform" value = "Cancel">Cancel</button>
 </form>
+
+
