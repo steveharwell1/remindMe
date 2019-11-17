@@ -66,7 +66,7 @@ function makeDayTable(month, year) {
         addReminder.value = d.toISOString().slice(0,10);
         //console.log(addReminder.value);
         addReminder.addEventListener('click', function() {
-            alert(this.value);
+            //alert(this.value);
             document.getElementById('addReminderDate').value = this.value;
             document.getElementById('addReminderForm').submit();
         });
