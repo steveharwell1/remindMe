@@ -6,17 +6,29 @@
 
 ?>
 
+<<<<<<< HEAD
 <form action ="" method="GET">
+=======
+<html>
+	<form action ="groupController.php" method="POST">
+>>>>>>> 9b3363f65afe8a3fc0724440a79ba7459e951933
 	Group ID 	<input type="text" name="GroupID" value=""/><br><br>
 	Group name	<input type="text" name="GroupName" value=""/><br><br>
 	Group owner	<input type="text" name="GroupOwner" value=""/><br><br>
 	Super group	<input type="text" name="SuperGroup" value=""/><br><br>
+<<<<<<< HEAD
 	<input type="submit" name="submit" value="submit"/>
 </form>
+=======
+	<input type="submit" name="submit" value="Create"/>
+	</form>
+</html>
+>>>>>>> 9b3363f65afe8a3fc0724440a79ba7459e951933
 
 <?php
 if($_GET['submit'])
 {
+<<<<<<< HEAD
 	$groupID = mysqli_real_escape_string($db, $_GET['GroupID']);
 	$groupName= $_GET['GroupName'];
 	$groupOwner= $_GET['GroupOwner'];
@@ -26,13 +38,28 @@ if($_GET['submit'])
 	{
 		$query= "INSERT INTO GROUPS VALUES('$groupID', '$groupName',
 				'$groupOwner', '$superGroup')";
+=======
+	$groupID = $_GET['GroupID'];
+	$groupName= $_GET['GroupName'];
+	$groupOwner= $_GET['GroupOwner`'];
+	$superGroup= $_GET['SuperGroup'];
+	
+	if($groupID!="" && $groupName!="" && $groupOwner!="" && $superGroup!="")
+	{
+		$query= "INSERT INTO GROUPS VALUES(`$groupID`, `$groupName`,
+				`$groupOwner`, `$superGroup`)";
+>>>>>>> 9b3363f65afe8a3fc0724440a79ba7459e951933
 		$data= mysqli_query($db,$query);
 		
 		if($data)
 		{
+<<<<<<< HEAD
 			echo "Data inserted into Database";
 		} else {
 
+=======
+			echo "Data inserted into Database"
+>>>>>>> 9b3363f65afe8a3fc0724440a79ba7459e951933
 		}
 	}
 	else
