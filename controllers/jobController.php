@@ -18,19 +18,23 @@ $jobMessage = mysqli_real_escape_string($db, $_POST["message"]);
 $jobType = mysqli_real_escape_string($db, $_POST["Type"]);
 
 $remindDateTime = date('Y-m-d H:i:s', strtotime("$remindDate $remindTime"));
+$jobDateTime = date('Y-m-d H:i:s', strtotime("$jobDate $jobTime"));
 $todayDate = date("Y-m-d");
 
+// inserts into job table
 $sql = "INSERT INTO JOBS 
 (JOB_ID, GROUP_ID, TITLE, COMMENT, CREATION_DATE, REMINDER_TIME, REPEATS_EVERY, JOB_TYPE, EXPIRED)
 VALUES (NULL, '$jobGroup', '$jobName', '$jobMessage', '$todayDate', '$remindDateTime', '$remindRepeat', '$jobType', '0')";
 $result = mysqli_query($db, $sql);
 
+//insert into reminder table
 $id = $db->insert_id;
 $sql = "INSERT INTO REMINDER
 (REMINDER_ID, JOB_ID, IS_SENT, SEND_AFTER)
 VALUES (NULL, '$id', '0', '$remindDateTime')";
 $result = mysqli_query($db, $sql);
 
+//insert into category table if category is selected
 if ($jobCategory !== NULL) {
     $sql = "INSERT INTO CATEGORY_ASSOC
     (CATEGORY_ID, JOB_ID)
@@ -38,14 +42,24 @@ if ($jobCategory !== NULL) {
     $result = mysqli_query($db, $sql);
 }
 
+//insert into appropriate job type table
 if ($jobType == "INFORMATIONAL") {
-
+    $sql = "INSERT INTO INFORMATIONAL
+    (JOB_ID, IS_READ)
+    VALUES ('$id', '0')";
 } else if ($jobType == "EVENT") {
-
+    $sql = "INSERT INTO EVENT_
+    (JOB_ID, BEGIN_TIME)
+    VALUES ('$id', '$jobDateTime')";
 } else if ($jobType == "DEADLINE") {
-
+    $sql = "INSERT INTO DEADLINE
+    (JOB_ID, IS_COMPLETE)
+    VALUES ('$id', '0')";
 } else if ($jobType == "TODO") {
-    
+    $sql = "INSERT INTO TODO
+    (JOB_ID, IS_COMPLETE)
+    VALUES ('$id', '0')";
 }
+$result = mysqli_query($db, $sql);
 
 ?>
