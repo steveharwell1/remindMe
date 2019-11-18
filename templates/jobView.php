@@ -89,7 +89,11 @@
     </select><br>
     <textarea name = "message" placeholder = "Comments/Info"></textarea>
     <button type = "submit" form = "jobform" value = "Save">Save</button>
-    <button type = "button" form = "jobform" value = "Cancel">Cancel</button>
+    <button type = "button" id = "Cancel">Cancel</button>
 </form>
 
-
+<script>
+    document.getElementById("Cancel").onclick = function () {
+        location.href = "/index.php";
+    };
+</script>
