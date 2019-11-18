@@ -62,5 +62,6 @@ if ($jobType == "INFORMATIONAL") {
 }
 $result = mysqli_query($db, $sql);
 
-header('Location: https://remindme.business/index.php');
+//header('Location: https://remindme.business/index.php');
+header('Location: /index.php');
 ?>
