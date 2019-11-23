@@ -17,7 +17,7 @@
 </div>
 <div id="CategoryView"> 
 <?php
-  include 'templates/CategoryView.php';
+  include 'templates/Categorycreate.php';
 ?>
 </div>
 
