@@ -20,7 +20,7 @@ session_start();
             </form>
             <?php }?>
             <?php if(isset($_SESSION['errors']) && count($_SESSION['errors']) > 0) {
-                echo '<div id="error-container">';
+                echo '<div id="error-container" class = "red">';
                 while (count($_SESSION['errors']) > 0) {
                     echo '<p>'.array_pop($_SESSION['errors']).'</p>';
                 }
