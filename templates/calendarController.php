@@ -26,8 +26,8 @@ $sql = "select * from JOBS
         INNER JOIN GROUPS ON JOBS.GROUP_ID = GROUPS.GROUP_ID
         WHERE GROUPS.GROUP_OWNER = '$user_id'
         and MONTH(REMINDER_TIME) = '$mon'
-        and YEAR(REMINDER_TIME) = '$year'
-        and REPEATS_EVERY = 'ONCE'";
+        and YEAR(REMINDER_TIME) = '$year'";
+        //and REPEATS_EVERY = 'ONCE'";
 $result = mysqli_query($db, $sql);
 $count = mysqli_num_rows($result);
 //error_log($sql);
@@ -48,8 +48,8 @@ $sql = "select * from JOBS
         INNER JOIN USERS_GROUPS on JOBS.GROUP_ID = USERS_GROUPS.GROUP_ID
         WHERE USERS_GROUPS.MEMBER_ID = '$user_id'
         and MONTH(REMINDER_TIME) = '$mon'
-        and YEAR(REMINDER_TIME) = '$year'
-        and REPEATS_EVERY = 'ONCE'";
+        and YEAR(REMINDER_TIME) = '$year'";
+        //and REPEATS_EVERY = 'ONCE'";
 $result = mysqli_query($db, $sql);
 $count += mysqli_num_rows($result);
 //turn sql result into php array object
