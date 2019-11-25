@@ -37,8 +37,9 @@ function populateTable () {
         rowNode.innerText = row.title
 
         index = new Date(row.date);
+        
         index = index.getDate() - 1;
-
+        //console.log(index);
         dayElements[index].appendChild(rowNode);
     }
 }

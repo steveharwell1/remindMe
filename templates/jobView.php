@@ -69,7 +69,7 @@
                     echo "<option value = " . $row['GROUP_ID'] . ">" . $row['GROUP_NAME'] . "</option>";
                 }
             } else {
-                echo "<option value = 'NULL'></option>";
+                //empty
             }
 
         ?>
@@ -93,7 +93,7 @@
                     echo "<option value = " . $row['CATEGORY_ID'] . ">" . $row['CATEGORY_NAME'] . "</option>";
                 }
             } else {
-                echo "<option value = 'NULL'></option>";
+                //empty
             }
 
         ?>
