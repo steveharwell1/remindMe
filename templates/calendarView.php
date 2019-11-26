@@ -1,7 +1,10 @@
 <h2 id="monthName"></h2>
 <button id="prevMonth" type="button">Previous</button>
 <button id="nextMonth" type="button">Next</button>
-<form id="addReminderForm" action="templates/jobView.php" method="POST" style="display: none;"><input id="addReminderDate" name="date"/></form>
+<form id="addReminderForm" action="templates/jobView.php" method="POST" style="display: none;">
+    <input id="addReminderDate" name="date"/>
+    <input id="updateReminderID" name="reminderID"/>
+</form>
 <table id="cal-table">
     <thead>
         <tr>
@@ -34,6 +37,12 @@ function populateTable () {
     //This turns the data into DOM elements.
     for( row of message['data']) {
         rowNode = document.createElement('div');
+        console.log(row.id);
+        let id = row.id;
+        rowNode.addEventListener('click', function () {
+            document.getElementById('updateReminderID').value = id;
+            document.getElementById('addReminderForm').submit();
+        });
         rowNode.innerText = row.title
 
         index = new Date(row.date);
