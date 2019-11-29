@@ -23,6 +23,7 @@
     <input type = "date" name = "remindDate"><input type = "time" name = "remindTime"><br>
 
     <!-- radio field for how often to repeat remeinder -->
+    <!--
     Repeat Reminder: <span class = "red">*</span><br>
     <div style = "margin: 10px; margin-left: 0px">
         <input type = "radio" id = "ONCE" name = "repeat" value = "ONCE" checked>
@@ -38,7 +39,7 @@
         <input type = "radio" id = "YEAR" name = "repeat" value = "YEAR">
         <label for = "YEAR">Yearly</label><br>
     </div>
-
+    -->
     <!-- drop down to select type of job -->
     <select name = "Type">
         <option value = "none" disabled selected>Select Type</option>

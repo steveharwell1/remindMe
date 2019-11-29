@@ -14,7 +14,7 @@ $jobDate = mysqli_real_escape_string($db, $_POST["duedate"]);
 $jobTime = mysqli_real_escape_string($db, $_POST["duetime"]);
 $remindDate = mysqli_real_escape_string($db, $_POST["remindDate"]);
 $remindTime = mysqli_real_escape_string($db, $_POST["remindTime"]);
-$remindRepeat = mysqli_real_escape_string($db, $_POST["repeat"]);
+//$remindRepeat = mysqli_real_escape_string($db, $_POST["repeat"]);
 $jobGroup = mysqli_real_escape_string($db, $_POST["Group"]);
 $jobCategory = mysqli_real_escape_string($db, $_POST["Category"]);
 $jobMessage = mysqli_real_escape_string($db, $_POST["message"]);
@@ -62,8 +62,8 @@ $todayDate = date("Y-m-d");
 
 // inserts into job table
 $sql = "INSERT INTO JOBS 
-(JOB_ID, GROUP_ID, TITLE, COMMENT, CREATION_DATE, REMINDER_TIME, REPEATS_EVERY, JOB_TYPE, EXPIRED)
-VALUES (NULL, '$jobGroup', '$jobName', '$jobMessage', '$todayDate', '$remindDateTime', '$remindRepeat', '$jobType', '0')";
+(JOB_ID, GROUP_ID, TITLE, COMMENT, CREATION_DATE, REMINDER_TIME, JOB_TYPE, EXPIRED)
+VALUES (NULL, '$jobGroup', '$jobName', '$jobMessage', '$todayDate', '$remindDateTime', '$jobType', '0')";
 $result = mysqli_query($db, $sql);
 
 /*//insert into reminder table
