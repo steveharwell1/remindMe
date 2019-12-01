@@ -25,8 +25,8 @@ $message = "";
 $sql = "select * from JOBS
         INNER JOIN GROUPS ON JOBS.GROUP_ID = GROUPS.GROUP_ID
         WHERE GROUPS.GROUP_OWNER = '$user_id'
-        and MONTH(REMINDER_TIME) = '$mon'
-        and YEAR(REMINDER_TIME) = '$year'";
+        and MONTH(DUE_DATE) = '$mon'
+        and YEAR(DUE_DATE) = '$year'";
         //and REPEATS_EVERY = 'ONCE'";
 $result = mysqli_query($db, $sql);
 $count = mysqli_num_rows($result);
@@ -37,7 +37,7 @@ $i = 0;
 while($row =  $result->fetch_assoc()) {
     $jobs[$i] = Array('title' => $row['TITLE'],
                       'comment' => $row['COMMENT'],
-                      'date' => $row['REMINDER_TIME'],
+                      'date' => $row['DUE_DATE'],
                       'id' => $row['JOB_ID']
                     );
     $i++;
@@ -47,8 +47,8 @@ $sql = "select * from JOBS
         INNER JOIN GROUPS ON JOBS.GROUP_ID = GROUPS.GROUP_ID
         INNER JOIN USERS_GROUPS on JOBS.GROUP_ID = USERS_GROUPS.GROUP_ID
         WHERE USERS_GROUPS.MEMBER_ID = '$user_id'
-        and MONTH(REMINDER_TIME) = '$mon'
-        and YEAR(REMINDER_TIME) = '$year'";
+        and MONTH(DUE_DATE) = '$mon'
+        and YEAR(DUE_DATE) = '$year'";
         //and REPEATS_EVERY = 'ONCE'";
 $result = mysqli_query($db, $sql);
 $count += mysqli_num_rows($result);
@@ -56,66 +56,11 @@ $count += mysqli_num_rows($result);
 while($row =  $result->fetch_assoc()) {
     $jobs[$i] = Array('title' => $row['TITLE'],
                       'comment' => $row['COMMENT'],
-                      'date' => $row['REMINDER_TIME'],
+                      'date' => $row['DUE_DATE'],
                       'id' => $row['JOB_ID']
                     );
     $i++;
 }
-
-// $sql = "select * from JOBS
-//         INNER JOIN GROUPS ON JOBS.GROUP_ID = GROUPS.GROUP_ID
-//         INNER JOIN USERS_GROUPS on JOBS.GROUP_ID = USERS_GROUPS.GROUP_ID
-//         WHERE USERS_GROUPS.MEMBER_ID = '$user_id'
-//         and REMINDER_TIME <= '$year-$mon'
-//         and REPEATS_EVERY != 'ONCE'";
-// $result = mysqli_query($db, $sql);
-// $count += mysqli_num_rows($result);
-// //turn sql result into php array object
-// while($row =  $result->fetch_assoc()) {
-//     $d = new DateTime($row['REMINDER_TIME']);
-//     $one_week = DateInterval::createFromDateString('1 week');
-//     $message = 'Inside while loop'.$d.'----'.$thisMonth;
-//     while($d <= $thisMonth)
-//     {
-//       $message = 'Inside while loop'.$d;
-//       //$d = mktime(0, 0, 0, date("m")  , date("d")+1, date("Y"))
-//       $jobs[$i] = Array('title' => $row['TITLE'],
-//                       'comment' => $row['COMMENT'],
-//                       'date' => $d,
-//                       'id' => $row['JOB_ID']
-//                     );
-//       $d->add($one_week);
-//       $i++;        
-//     }
-    
-// }
-
-// $sql = "select * from JOBS
-//         INNER JOIN GROUPS ON JOBS.GROUP_ID = GROUPS.GROUP_ID
-//         WHERE GROUPS.GROUP_OWNER = '$user_id'
-//         and REMINDER_TIME <= '$year-$mon'
-//         and REPEATS_EVERY != 'ONCE'";
-// $result = mysqli_query($db, $sql);
-// $count += mysqli_num_rows($result);
-// //turn sql result into php array object
-// while($row =  $result->fetch_assoc()) {
-//   $d = new DateTime($row['REMINDER_TIME']);
-//   $one_week = DateInterval::createFromDateString('1 week');
-//   while($d < $thisMonth)
-//   {
-//     $message = $d->format('m');
-//     if($d->format('m') == ($mon - 1) && $d->format('Y') == $year)
-//     {
-//         $jobs[$i] = Array('title' => $row['TITLE'],
-//         'comment' => $row['COMMENT'],
-//         'date' => $d->format('Y-m-d\TH:i:sP'),
-//         'id' => $row['JOB_ID']
-//       );
-//       $i++; 
-//     }
-//     $d->add($one_week);
-//   }
-// }
 
 //Send Data at the end
 $data = array(  'data' => $jobs,
