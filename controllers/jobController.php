@@ -9,6 +9,7 @@ require_once '../db/test_db.php';
 require_once '../utils/error_msg.php';
 
 $userid = $_SESSION['user_id'];
+$jobid = $_SESSION['jobid'];
 $jobName = mysqli_real_escape_string($db, $_POST["jobname"]);
 $jobDate = mysqli_real_escape_string($db, $_POST["duedate"]);
 $jobTime = mysqli_real_escape_string($db, $_POST["duetime"]);
@@ -60,47 +61,68 @@ $remindDateTime = date('Y-m-d H:i:s', strtotime("$remindDate $remindTime"));
 $jobDateTime = date('Y-m-d H:i:s', strtotime("$jobDate $jobTime"));
 $todayDate = date("Y-m-d");
 
-// inserts into job table
-$sql = "INSERT INTO JOBS 
-(JOB_ID, GROUP_ID, TITLE, COMMENT, CREATION_DATE, REMINDER_TIME, JOB_TYPE, EXPIRED)
-VALUES (NULL, '$jobGroup', '$jobName', '$jobMessage', '$todayDate', '$remindDateTime', '$jobType', '0')";
-$result = mysqli_query($db, $sql);
+// if job needs to be created
+if ($jobid == 0) {
+    // inserts into job table
+    $sql = "INSERT INTO JOBS 
+    (JOB_ID, GROUP_ID, TITLE, COMMENT, CREATION_DATE, DUE_DATE, REMINDER_TIME, JOB_TYPE, EXPIRED)
+    VALUES (NULL, '$jobGroup', '$jobName', '$jobMessage', '$todayDate', '$jobDateTime', '$remindDateTime', '$jobType', '0')";
+    $result = mysqli_query($db, $sql);
 
-/*//insert into reminder table
-$id = $db->insert_id;
-$sql = "INSERT INTO REMINDER
-(REMINDER_ID, JOB_ID, IS_SENT, SEND_AFTER)
-VALUES (NULL, '$id', '0', '$remindDateTime')";
-$result = mysqli_query($db, $sql);
-*/
+    //get id of job created
+    $jobid = $db->insert_id;
 
-//insert into category table if category is selected
-if ($jobCategory !== NULL) {
-    $sql = "INSERT INTO CATEGORY_ASSOC
-    (CATEGORY_ID, JOB_ID)
-    VALUES ('$jobCategory', '$id')";
+    /*//insert into reminder table
+    $sql = "INSERT INTO REMINDER
+    (REMINDER_ID, JOB_ID, IS_SENT, SEND_AFTER)
+    VALUES (NULL, '$id', '0', '$remindDateTime')";
+    $result = mysqli_query($db, $sql);
+    */
+
+    //insert into category table if category is selected
+    if ($jobCategory !== NULL) {
+        $sql = "INSERT INTO CATEGORY_ASSOC
+        (CATEGORY_ID, JOB_ID)
+        VALUES ('$jobCategory', '$jobid')";
+        $result = mysqli_query($db, $sql);
+    }
+
+    /*
+    //insert into appropriate job type table
+    if ($jobType == "INFORMATIONAL") {
+        $sql = "INSERT INTO INFORMATIONAL
+        (JOB_ID, IS_READ)
+        VALUES ('$jobid', '0')";
+    } else if ($jobType == "EVENT") {
+        $sql = "INSERT INTO EVENT_
+        (JOB_ID, BEGIN_TIME, END_TIME, location)
+        VALUES ('$jobid', '$jobDateTime', '$jobDateTime', NULL)";
+    } else if ($jobType == "DEADLINE") {
+        $sql = "INSERT INTO DEADLINE
+        (JOB_ID, IS_COMPLETE)
+        VALUES ('$jobid', '0')";
+    } else if ($jobType == "TODO") {
+        $sql = "INSERT INTO TODO
+        (JOB_ID, IS_COMPLETE)
+        VALUES ('$jobid', '0')";
+    }
+    $result = mysqli_query($db, $sql);
+    */
+}
+// if job needs to be updated
+else {
+    // update job in JOBS table
+    $sql = "UPDATE JOBS
+    SET GROUP_ID = '$jobGroup', TITLE = '$jobName', COMMENT = '$jobMessage', CREATION_DATE = '$todayDate', DUE_DATE = '$jobDateTime', REMINDER_TIME = '$remindDateTime', JOB_TYPE = '$jobType'
+    WHERE JOB_ID = $jobid";
+    $result = mysqli_query($db, $sql);
+
+    // update category table
+    $sql = "UPDATE CATEGORY_ASSOC
+    SET CATEGORY_ID = '$jobCategory'
+    WHERE JOB_ID = $jobid";
     $result = mysqli_query($db, $sql);
 }
-
-//insert into appropriate job type table
-if ($jobType == "INFORMATIONAL") {
-    $sql = "INSERT INTO INFORMATIONAL
-    (JOB_ID, IS_READ)
-    VALUES ('$id', '0')";
-} else if ($jobType == "EVENT") {
-    $sql = "INSERT INTO EVENT_
-    (JOB_ID, BEGIN_TIME, END_TIME, location)
-    VALUES ('$id', '$jobDateTime', '$jobDateTime', NULL)";
-} else if ($jobType == "DEADLINE") {
-    $sql = "INSERT INTO DEADLINE
-    (JOB_ID, IS_COMPLETE)
-    VALUES ('$id', '0')";
-} else if ($jobType == "TODO") {
-    $sql = "INSERT INTO TODO
-    (JOB_ID, IS_COMPLETE)
-    VALUES ('$id', '0')";
-}
-$result = mysqli_query($db, $sql);
 
 //header('Location: https://remindme.business/index.php');
 header('Location: /index.php');
