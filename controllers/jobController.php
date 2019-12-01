@@ -80,7 +80,7 @@ if ($jobid == 0) {
     */
 
     //insert into category table if category is selected
-    if ($jobCategory !== NULL) {
+    if (!empty($jobCategory)) {
         $sql = "INSERT INTO CATEGORY_ASSOC
         (CATEGORY_ID, JOB_ID)
         VALUES ('$jobCategory', '$jobid')";
@@ -117,12 +117,35 @@ else {
     WHERE JOB_ID = $jobid";
     $result = mysqli_query($db, $sql);
 
-    // update category table
-    $sql = "UPDATE CATEGORY_ASSOC
-    SET CATEGORY_ID = '$jobCategory'
+    $sql = "SELECT *
+    FROM CATEGORY_ASSOC
     WHERE JOB_ID = $jobid";
-    $result = mysqli_query($db, $sql);
+    $result = mysqli_query($db, $sql);    
+
+    // update job's category
+    if ($result->num_rows > 0) {
+        if (!empty($jobCategory)) {
+            $sql = "UPDATE CATEGORY_ASSOC
+            SET CATEGORY_ID = '$jobCategory'
+            WHERE JOB_ID = $jobid";
+            $result = mysqli_query($db, $sql);
+        }
+        else {
+            $sql = "DELETE FROM CATEGORY_ASSOC
+            WHERE JOB_ID = $jobid";
+        }
+    }
+    else {
+        if (!empty($jobCategory)) {
+            $sql = "INSERT INTO CATEGORY_ASSOC
+            (CATEGORY_ID, JOB_ID)
+            VALUES ('$jobCategory', '$jobid')";
+            $result = mysqli_query($db, $sql);
+        }
+    }
 }
+
+
 
 //header('Location: https://remindme.business/index.php');
 header('Location: /index.php');
