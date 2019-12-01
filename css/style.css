@@ -115,6 +115,7 @@ form#jobform {
 #CategoryView, #groupView
 {
     padding: 0 1em 0 1em;
+    overflow-y: scroll;
 }
 
 h2 {
@@ -122,4 +123,28 @@ h2 {
 }
 ul, ol {
     margin: 0 0 0 1.5em;
+}
+
+.job {
+    display:flex;
+    margin: 0 .1em .1em .1em;
+}
+
+.job:hover, .job:active {
+    outline: dashed black 2px;
+}
+
+.info, .todo, .deadline, .event {
+    display: flex;
+    flex: 0 0 1.3em;
+    margin-right: .2em;
+    font-style: normal;
+
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    background-color:darkblue;
+    color: white;
+    width: 1.3em;
+    height: 1.3em;
 }

@@ -24,6 +24,8 @@ $message = "";
 
 $sql = "select * from JOBS
         INNER JOIN GROUPS ON JOBS.GROUP_ID = GROUPS.GROUP_ID
+        LEFT JOIN CATEGORY_ASSOC ON JOBS.JOB_ID = CATEGORY_ASSOC.JOB_ID
+        LEFT JOIN CATEGORY ON CATEGORY_ASSOC.CATEGORY_ID = CATEGORY.CATEGORY_ID
         WHERE GROUPS.GROUP_OWNER = '$user_id'
         and MONTH(DUE_DATE) = '$mon'
         and YEAR(DUE_DATE) = '$year'";
@@ -38,7 +40,9 @@ while($row =  $result->fetch_assoc()) {
     $jobs[$i] = Array('title' => $row['TITLE'],
                       'comment' => $row['COMMENT'],
                       'date' => $row['DUE_DATE'],
-                      'id' => $row['JOB_ID']
+                      'id' => $row['JOB_ID'],
+                      'color' => $row['color'],
+                      'type' => $row['JOB_TYPE']
                     );
     $i++;
 }
@@ -46,6 +50,8 @@ while($row =  $result->fetch_assoc()) {
 $sql = "select * from JOBS
         INNER JOIN GROUPS ON JOBS.GROUP_ID = GROUPS.GROUP_ID
         INNER JOIN USERS_GROUPS on JOBS.GROUP_ID = USERS_GROUPS.GROUP_ID
+        LEFT JOIN CATEGORY_ASSOC ON JOBS.JOB_ID = CATEGORY_ASSOC.JOB_ID
+        LEFT JOIN CATEGORY ON CATEGORY_ASSOC.CATEGORY_ID = CATEGORY.CATEGORY_ID
         WHERE USERS_GROUPS.MEMBER_ID = '$user_id'
         and MONTH(DUE_DATE) = '$mon'
         and YEAR(DUE_DATE) = '$year'";
@@ -57,7 +63,9 @@ while($row =  $result->fetch_assoc()) {
     $jobs[$i] = Array('title' => $row['TITLE'],
                       'comment' => $row['COMMENT'],
                       'date' => $row['DUE_DATE'],
-                      'id' => $row['JOB_ID']
+                      'id' => $row['JOB_ID'],
+                      'color' => $row['color'],
+                      'type' => $row['JOB_TYPE']
                     );
     $i++;
 }
