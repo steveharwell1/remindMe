@@ -40,6 +40,7 @@ function populateTable () {
         console.log(row.id);
         let id = row.id;
         rowNode.addEventListener('click', function () {
+            //alert(id);
             document.getElementById('updateReminderID').value = id;
             document.getElementById('addReminderForm').submit();
         });
