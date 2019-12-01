@@ -37,14 +37,40 @@ function populateTable () {
     //This turns the data into DOM elements.
     for( row of message['data']) {
         rowNode = document.createElement('div');
-        console.log(row.id);
+        rowNode.style.color = row.color;
+        rowNode.className = 'job';
+
+        rowType = document.createElement('i');
+        rowNode.appendChild(rowType);
+        switch(row.type) {
+            case 'INFORMATIONAL':
+                rowType.innerText = 'I';
+                rowType.className='info';
+                break;
+            case 'TODO':
+                rowType.innerText = 'T';
+                rowType.className='todo';
+                break;
+            case 'DEADLINE':
+                rowType.innerText = 'D';
+                rowType.className='deadline';
+                break;
+            case 'EVENT':
+                rowType.innerText = 'E';
+                rowType.className='event';
+                break;
+            default:
+                console.log(row.type)
+        } 
+
+        //console.log(row.id);
         let id = row.id;
         rowNode.addEventListener('click', function () {
-            //alert(id);
+            document.getElementById('addReminderDate').value = '';
             document.getElementById('updateReminderID').value = id;
             document.getElementById('addReminderForm').submit();
         });
-        rowNode.innerText = row.title
+        rowNode.appendChild(document.createTextNode(row.title));
 
         index = new Date(row.date);
         
@@ -106,6 +132,7 @@ function makeDayTable(month, year) {
         //console.log(addReminder.value);
         addReminder.addEventListener('click', function() {
             //alert(this.value);
+            document.getElementById('updateReminderID').value = '';
             document.getElementById('addReminderDate').value = this.value;
             document.getElementById('addReminderForm').submit();
         });
