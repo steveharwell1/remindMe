@@ -43,19 +43,6 @@ else if (empty($jobType)) {
     exit();
 }
 
-// if group is NULL then change jobGroup variable to user's personal group id
-if(empty($jobGroup)) {
-    $sql = "SELECT *
-    FROM GROUPS
-    WHERE GROUP_OWNER = $userid
-    LIMIT 1";
-    $result = mysqli_query($db, $sql);
-    if ($result->num_rows > 0) {
-        $row = $result->fetch_assoc();
-        $jobGroup = $row['GROUP_ID'];
-    }
-}
-
 // formats dates to be input into database
 $remindDateTime = date('Y-m-d H:i:s', strtotime("$remindDate $remindTime"));
 $jobDateTime = date('Y-m-d H:i:s', strtotime("$jobDate $jobTime"));
@@ -79,8 +66,8 @@ if ($jobid == 0) {
     $result = mysqli_query($db, $sql);
     */
 
-    //insert into category table if category is selected
-    if ($jobCategory !== NULL) {
+    //insert into category_assoc table if category is selected
+    if ($jobCategory != "NONE") {
         $sql = "INSERT INTO CATEGORY_ASSOC
         (CATEGORY_ID, JOB_ID)
         VALUES ('$jobCategory', '$jobid')";
@@ -111,18 +98,53 @@ if ($jobid == 0) {
 }
 // if job needs to be updated
 else {
+
     // update job in JOBS table
     $sql = "UPDATE JOBS
     SET GROUP_ID = '$jobGroup', TITLE = '$jobName', COMMENT = '$jobMessage', CREATION_DATE = '$todayDate', DUE_DATE = '$jobDateTime', REMINDER_TIME = '$remindDateTime', JOB_TYPE = '$jobType'
     WHERE JOB_ID = $jobid";
     $result = mysqli_query($db, $sql);
 
-    // update category table
-    $sql = "UPDATE CATEGORY_ASSOC
-    SET CATEGORY_ID = '$jobCategory'
-    WHERE JOB_ID = $jobid";
-    $result = mysqli_query($db, $sql);
+    // find category_assoc that fits update
+    $sql = "SELECT *
+    FROM CATEGORY_ASSOC
+    INNER JOIN CATEGORY
+    ON CATEGORY.CATEGORY_ID = CATEGORY_ASSOC.CATEGORY_ID
+    WHERE CATEGORY.USER_ID = $userid
+    AND CATEGORY_ASSOC.JOB_ID = $jobid";
+    $result = mysqli_query($db, $sql);    
+
+    // update job's category
+    // if a result is found
+    if ($result->num_rows > 0) {
+        $row = $result->fetch_assoc();
+        $catid = $row['CATEGORY_ASSOC_ID'];
+        // if changing to another category
+        if ($jobCategory != "NONE") {
+            $sql = "UPDATE CATEGORY_ASSOC
+            SET CATEGORY_ID = '$jobCategory'
+            WHERE CATEGORY_ASSOC_ID = $catid";
+            $result = mysqli_query($db, $sql);
+        }
+        // if applying no category
+        else {
+            $sql = "DELETE FROM CATEGORY_ASSOC
+            WHERE CATEGORY_ASSOC.CATEGORY_ASSOC_ID = $catid";
+            $result = mysqli_query($db, $sql);
+        }
+    }
+    // if applying a category from none
+    else {
+        if ($jobCategory != "NONE") {
+            $sql = "INSERT INTO CATEGORY_ASSOC
+            (CATEGORY_ID, JOB_ID)
+            VALUES ('$jobCategory', '$jobid')";
+            $result = mysqli_query($db, $sql);
+        }
+    }
 }
+
+
 
 //header('Location: https://remindme.business/index.php');
 header('Location: /index.php');

@@ -32,9 +32,11 @@
             $jobDateTime = $row['DUE_DATE'];
             $jobDate = date('Y-m-d', strtotime($jobDateTime));
             $jobTime = date('H:i', strtotime($jobDateTime));
-            $reminderDateTime = $row['REMINDER_TIME'];
-            $reminderDate = date('Y-m-d', strtotime($reminderDateTime));
-            $reminderTime = date('H:i', strtotime($reminderDateTime));
+            if ($row['REMINDER_TIME'] !== NULL) {
+                $reminderDateTime = $row['REMINDER_TIME'];
+                $reminderDate = date('Y-m-d', strtotime($reminderDateTime));
+                $reminderTime = date('H:i', strtotime($reminderDateTime));
+            }
             //$repeat;
             $type = $row['JOB_TYPE'];
             $groupID = $row['GROUP_ID'];
@@ -112,10 +114,10 @@
     </div>
 
     <!-- drop down to select group -->
+    <label for = "Group">Select Group:</label>
     <select name = "Group">
         <?PHP
-            #$usergroup = $_SESSION['group_id'];
-
+            // find groups user is in
             $sql = "SELECT * 
             FROM GROUPS 
             INNER JOIN USERS_GROUPS 
@@ -123,51 +125,71 @@
             WHERE MEMBER_ID = $userid";
             $result = mysqli_query($db, $sql);
 
-            echo "<option value = '' disabled selected>Select Group</option>";
-            echo "<option value = ''>None</option>";
+            // find groups user is owner of
+            $sql2 = "SELECT *
+            FROM GROUPS
+            WHERE GROUP_OWNER = $userid
+            ORDER BY GROUP_OWNER";
+            $result2 = mysqli_query($db, $sql2);
 
+            // display groups user is owner of and display personal group first if not group connected to job
+            if ($result2->num_rows > 0) {
+                while($row2 = $result2->fetch_assoc()) {
+                    echo "<option value = " . $row2['GROUP_ID'];
+                    if (isset($_POST['reminderID']) && !empty($_POST['reminderID'])) {
+                        if ($groupID == $row2['GROUP_ID']) {echo " selected";} 
+                    }
+                    echo ">" . $row2['GROUP_NAME'] . "</option>";
+                }
+            }
+
+            // display groups user is a part of and display group job is connected to
             if ($result->num_rows > 0) {
                 while($row = $result->fetch_assoc()) {
                     echo "<option value = " . $row['GROUP_ID'];
-                    if ($groupID == $row['GROUP_ID']) {echo " selected";} 
+                    if (isset($_POST['reminderID']) && !empty($_POST['reminderID'])) {
+                        if ($groupID == $row['GROUP_ID']) {echo " selected";} 
+                    }
                     echo ">" . $row['GROUP_NAME'] . "</option>";
                 }
-            } else {
-                //empty
             }
-
         ?>
-    </select>
+    </select><br>
 
     <!-- drop down to select category -->
+    <label for = "Category">Select Category:</label>
     <select name = "Category">
         <?PHP
-
+            // find categories of user to display
             $sql = "SELECT * 
             FROM CATEGORY
             WHERE CATEGORY.USER_ID = $userid";
             $result = mysqli_query($db, $sql);
-
+            
+            // find category that is associated with job and user
             $sql2 = "SELECT *
             FROM CATEGORY_ASSOC
-            WHERE CATEGORY_ASSOC.JOB_ID = $id";
+            INNER JOIN CATEGORY
+            ON CATEGORY.CATEGORY_ID = CATEGORY_ASSOC.CATEGORY_ID
+            WHERE CATEGORY_ASSOC.JOB_ID = $id
+            AND CATEGORY.USER_ID = $userid";
             $result2 = mysqli_query($db, $sql2);
             if ($result2->num_rows > 0) {
                 $row2 = $result2->fetch_assoc();
             }
 
-            echo "<option value = '' disabled selected>Select Category</option>";
-            echo "<option value = ''>None</option>";
+            echo "<option value = 'NONE'>None</option>";
 
+            // display categories and select one that is connected to job
             if ($result->num_rows > 0) {
                 while($row = $result->fetch_assoc()) {
                     echo "<option value = " . $row['CATEGORY_ID'];
-                    if ($id == $row2['JOB_ID']) {echo " selected";}
+                    if (isset($_POST['reminderID']) && !empty($_POST['reminderID'])) {
+                        if ($id == $row2['JOB_ID']) {echo " selected";}
+                    }
                     echo ">" . $row['CATEGORY_NAME'] . "</option>";
                 }
-            } else {
-                //empty
-            }
+            } 
 
         ?>
     </select><br>
