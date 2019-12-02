@@ -44,8 +44,9 @@ else if (empty($jobType)) {
 }
 
 // formats dates to be input into database
-$remindDateTime = date('Y-m-d H:i:s', strtotime("$remindDate $remindTime"));
-$jobDateTime = date('Y-m-d H:i:s', strtotime("$jobDate $jobTime"));
+// date_default_timezone_set('America/Chicago');
+$remindDateTime = date('Y-m-d H:i:s', strtotime("$remindDate $remindTime ".' GMT-06:00'));
+$jobDateTime = date('Y-m-d H:i:s', strtotime("$jobDate $jobTime".' GMT-06:00'));
 $todayDate = date("Y-m-d");
 
 // if job needs to be created
