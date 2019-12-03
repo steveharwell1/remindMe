@@ -16,7 +16,6 @@ session_start();
 
             <?php if(isset($_SESSION['user_id'])) {?>
             <div>Hello <?php echo $_SESSION['user_first_name']; ?></div>
-            <div>The current time is <?php echo date("l jS \of F Y h:i A"); ?></div>
             <form action="/utils/logout_user.php" method="POST">
                 <button type="submit" name="submit">Logout</button>
             </form>
