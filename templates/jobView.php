@@ -28,7 +28,7 @@
 
         if ($result->num_rows > 0) {
             $row = $result->fetch_assoc();
-            $title = $row['TITLE'];
+            $title = htmlspecialchars($row['TITLE']);
             $jobDateTime = $row['DUE_DATE'];
             $jobDate = date('Y-m-d', strtotime($jobDateTime));
             $jobTime = date('H:i', strtotime($jobDateTime));
@@ -40,7 +40,7 @@
             //$repeat;
             $type = $row['JOB_TYPE'];
             $groupID = $row['GROUP_ID'];
-            $message = $row['COMMENT'];
+            $message = htmlspecialchars($row['COMMENT']);
         }
     }
     else {
