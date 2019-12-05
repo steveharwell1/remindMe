@@ -1,26 +1,92 @@
 <?php 
-  include_once '../utils/login_required.php';
-  include_once '../db/test_db.php';
-  include '../utils/debug.php';
-  include 'header.php';
+    include_once '../utils/login_required.php';
+    include_once '../db/test_db.php';
+    include '../utils/debug.php';
+    include 'header.php';
 
-  $date = $_POST['date'];
+    // get user id
+    $userid = $_SESSION['user_id'];
+
+    //post from clicking on reminder on calendar
+    $id = 0;
+    $title = "";
+    $jobDate = date('m/d/Y');
+    $jobTime = date('H:i');
+    $reminderDate = date('m/d/Y');
+    $reminderTime = date('H:i');
+    //$repeat;
+    $type = "";
+    $groupID = 0;
+    $categoryID = 0;
+    $message = "";
+    if (isset($_POST['reminderID']) && !empty($_POST['reminderID'])) {
+        $id = $_POST['reminderID'];
+        $sql = "SELECT *
+        FROM JOBS
+        WHERE JOB_ID = $id";
+        $result = mysqli_query($db, $sql);
+
+        if ($result->num_rows > 0) {
+            $row = $result->fetch_assoc();
+            $title = $row['TITLE'];
+            $jobDateTime = $row['DUE_DATE'];
+            $jobDate = date('Y-m-d', strtotime($jobDateTime));
+            $jobTime = date('H:i', strtotime($jobDateTime));
+            if ($row['REMINDER_TIME'] !== NULL) {
+                $reminderDateTime = $row['REMINDER_TIME'];
+                $reminderDate = date('Y-m-d', strtotime($reminderDateTime));
+                $reminderTime = date('H:i', strtotime($reminderDateTime));
+            }
+            //$repeat;
+            $type = $row['JOB_TYPE'];
+            $groupID = $row['GROUP_ID'];
+            $message = $row['COMMENT'];
+        }
+    }
+    else {
+        //post from + button on calendar
+        $jobDate = $_POST['date'];
+    }
+    $_SESSION['jobid'] = $id;
 
 ?>
 
 <form action = "../controllers/jobController.php" method = "post" id = "jobform">
-    Job Name<br>
-    <input type = "text" name = "jobname"><br>
 
-    Due Date<br>
-    <input type = "date" name = "duedate" value = "<?php echo $date?>" /><input type = "time" name = "duetime"><br>
+    <!-- text field for job title -->
+    Job Name <span class = "red">*</span><br>
+    <input type = "text" name = "jobname" value = "<?php echo $title; ?>"><br>
 
-    Reminder Date<br>
-    <input type = "date" name = "remindDate"><input type = "time" name = "remindTime"><br>
+    <!-- date field for date of job -->
+    Date of Event <span class = "red">*</span><br>
+    <input type = "date" name = "duedate" value = "<?php echo $jobDate; ?>" />
+    <?php 
+        if(isset($_POST['reminderID']) && !empty($_POST['reminderID'])) {
+            echo "<input type = 'time' name = 'duetime' value = " . $jobTime . ">";
+        }
+        else {
+            echo "<input type = 'time' name = 'duetime' value = '12:00'>";
+        }
+        ?>
+    <br>
 
-    Repeat Every<br>
+    <!-- reminder date -->
+    Date to be Reminded <span class = "red">*</span><br>
+    <input type = "date" name = "remindDate" value = "<?php echo $reminderDate; ?>" />
+    <?php 
+        if(isset($_POST['reminderID']) && !empty($_POST['reminderID'])) {
+            echo "<input type = 'time' name = 'remindTime' value = " . $reminderTime . ">";
+        }
+        else {
+            echo "<input type = 'time' name = 'remindTime' value = '12:00'>";
+        }
+        ?>
+    <br>
+
+    <!-- radio field for how often to repeat remeinder 
+    Repeat Reminder: <span class = "red">*</span><br>
     <div style = "margin: 10px; margin-left: 0px">
-        <input type = "radio" id = "ONCE" name = "repeat" value = "ONCE">
+        <input type = "radio" id = "ONCE" name = "repeat" value = "ONCE" checked>
         <label for = "ONCE">Once</label><br>
         <input type = "radio" id = "DAY" name = "repeat" value = "DAY">
         <label for = "DAY">Daily</label><br>
@@ -32,19 +98,26 @@
         <label for = "MONTH">Monthly</label><br>
         <input type = "radio" id = "YEAR" name = "repeat" value = "YEAR">
         <label for = "YEAR">Yearly</label><br>
+    </div> -->
+
+    <!-- radio to select type of job -->
+    Type: <span class = "red">*</span>
+    <div style = "margin: 10px; margin-left: 0px">
+        <input type = "radio" name = "Type" value = "DEADLINE" <?php if ($type == "DEADLINE") {echo "checked";} ?>>
+        <label for = "DEADLINE">Deadline</label><br>
+        <input type = "radio" name = "Type" value = "INFORMATIONAL" <?php if ($type == "INFORMATIONAL") {echo "checked";} ?>>
+        <label for = "INFORMATIONAL">Informational</label><br>
+        <input type = "radio" name = "Type" value = "TODO" <?php if ($type == "TODO") {echo "checked";} ?>>
+        <label for = "TODO">To Do</label><br>
+        <input type = "radio" name = "Type" value = "EVENT" <?php if ($type == "EVENT") {echo "checked";} ?>>
+        <label for = "EVENT">Event</label><br>
     </div>
-    <select name = "Type">
-        <option value = "none" disabled selected>Select Type</option>
-        <option value = "DEADLINE">Deadline</option>
-        <option value = "INFORMATIONAL">Informational</option>
-        <option value = "TODO">To Do</option>
-        <option value = "EVENT">Event</option>
-    </select><br>
+
+    <!-- drop down to select group -->
+    <label for = "Group">Select Group:</label>
     <select name = "Group">
         <?PHP
-            $userid = $_SESSION['user_id'];
-            #$usergroup = $_SESSION['group_id'];
-
+            // find groups user is in
             $sql = "SELECT * 
             FROM GROUPS 
             INNER JOIN USERS_GROUPS 
@@ -52,44 +125,86 @@
             WHERE MEMBER_ID = $userid";
             $result = mysqli_query($db, $sql);
 
-            echo "<option value = 'NULL' disabled selected>Select Group</option>";
-            echo "<option value = 'NULL'>None</option>";
+            // find groups user is owner of
+            $sql2 = "SELECT *
+            FROM GROUPS
+            WHERE GROUP_OWNER = $userid
+            ORDER BY GROUP_OWNER";
+            $result2 = mysqli_query($db, $sql2);
 
-            if ($result->num_rows > 0) {
-                while($row = $result->fetch_assoc()) {
-                    echo "<option value = " . $row['GROUP_ID'] . ">" . $row['GROUP_NAME'] . "</option>";
+            // display groups user is owner of and display personal group first if not group connected to job
+            if ($result2->num_rows > 0) {
+                while($row2 = $result2->fetch_assoc()) {
+                    echo "<option value = " . $row2['GROUP_ID'];
+                    if (isset($_POST['reminderID']) && !empty($_POST['reminderID'])) {
+                        if ($groupID == $row2['GROUP_ID']) {echo " selected";} 
+                    }
+                    echo ">" . $row2['GROUP_NAME'] . "</option>";
                 }
-            } else {
-                echo "<option value = 'NULL'></option>";
             }
 
+            // display groups user is a part of and display group job is connected to
+            if ($result->num_rows > 0) {
+                while($row = $result->fetch_assoc()) {
+                    echo "<option value = " . $row['GROUP_ID'];
+                    if (isset($_POST['reminderID']) && !empty($_POST['reminderID'])) {
+                        if ($groupID == $row['GROUP_ID']) {echo " selected";} 
+                    }
+                    echo ">" . $row['GROUP_NAME'] . "</option>";
+                }
+            }
         ?>
-    </select>
+    </select><br>
+
+    <!-- drop down to select category -->
+    <label for = "Category">Select Category:</label>
     <select name = "Category">
         <?PHP
-            $userid = $_SESSION['user_id'];
-
+            // find categories of user to display
             $sql = "SELECT * 
             FROM CATEGORY
             WHERE CATEGORY.USER_ID = $userid";
             $result = mysqli_query($db, $sql);
+            
+            // find category that is associated with job and user
+            $sql2 = "SELECT *
+            FROM CATEGORY_ASSOC
+            INNER JOIN CATEGORY
+            ON CATEGORY.CATEGORY_ID = CATEGORY_ASSOC.CATEGORY_ID
+            WHERE CATEGORY_ASSOC.JOB_ID = $id
+            AND CATEGORY.USER_ID = $userid";
+            $result2 = mysqli_query($db, $sql2);
+            if ($result2->num_rows > 0) {
+                $row2 = $result2->fetch_assoc();
+            }
 
-            echo "<option value = 'NULL' disabled selected>Select Category</option>";
-            echo "<option value = 'NULL'>None</option>";
+            echo "<option value = 'NONE'>None</option>";
 
+            // display categories and select one that is connected to job
             if ($result->num_rows > 0) {
                 while($row = $result->fetch_assoc()) {
-                    echo "<option value = " . $row['CATEGORY_ID'] . ">" . $row['CATEGORY_NAME'] . "</option>";
+                    echo "<option value = " . $row['CATEGORY_ID'];
+                    if (isset($_POST['reminderID']) && !empty($_POST['reminderID'])) {
+                        if ($id == $row2['JOB_ID']) {echo " selected";}
+                    }
+                    echo ">" . $row['CATEGORY_NAME'] . "</option>";
                 }
-            } else {
-                echo "<option value = 'NULL'></option>";
-            }
+            } 
 
         ?>
     </select><br>
-    <textarea name = "message" placeholder = "Comments/Info"></textarea>
+
+    <!-- text for comments to send with reminder -->
+    <textarea name = "message" placeholder = "Comments/Info"><?php echo $message; ?></textarea>
+
+    <!-- buttons to submit job/reminder or go back -->
     <button type = "submit" form = "jobform" value = "Save">Save</button>
-    <button type = "button" form = "jobform" value = "Cancel">Cancel</button>
+    <button type = "button" id = "Cancel">Back</button>
 </form>
 
-
+<!-- script to make back button go to main page -->
+<script>
+    document.getElementById("Cancel").onclick = function () {
+        location.href = "/index.php";
+    };
+</script>

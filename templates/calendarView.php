@@ -1,7 +1,10 @@
 <h2 id="monthName"></h2>
 <button id="prevMonth" type="button">Previous</button>
 <button id="nextMonth" type="button">Next</button>
-<form id="addReminderForm" action="templates/jobView.php" method="POST" style="display: none;"><input id="addReminderDate" name="date"/></form>
+<form id="addReminderForm" action="templates/jobView.php" method="POST" style="display: none;">
+    <input id="addReminderDate" name="date"/>
+    <input id="updateReminderID" name="reminderID"/>
+</form>
 <table id="cal-table">
     <thead>
         <tr>
@@ -19,6 +22,69 @@
 
 </table>
 <script>
+
+//just make one of these per request type
+//in the example page you can see that the you can press the
+//action button multiple times and this object will get reused multiple times as oReq
+var oReq = new XMLHttpRequest();
+
+function populateTable () {
+    //capture response text
+    text = this.responseText;
+    //Transform text into a native data sctructure
+    message = JSON.parse(text);
+    console.log(message);
+    //This turns the data into DOM elements.
+    for( row of message['data']) {
+        rowNode = document.createElement('div');
+        rowNode.style.color = row.color;
+        rowNode.className = 'job';
+
+        rowType = document.createElement('i');
+        rowNode.appendChild(rowType);
+        switch(row.type) {
+            case 'INFORMATIONAL':
+                rowType.innerText = 'I';
+                rowType.className='info';
+                break;
+            case 'TODO':
+                rowType.innerText = 'T';
+                rowType.className='todo';
+                break;
+            case 'DEADLINE':
+                rowType.innerText = 'D';
+                rowType.className='deadline';
+                break;
+            case 'EVENT':
+                rowType.innerText = 'E';
+                rowType.className='event';
+                break;
+            default:
+                console.log(row.type)
+        } 
+
+        //console.log(row.id);
+        let id = row.id;
+        rowNode.addEventListener('click', function () {
+            //alert(id);
+            document.getElementById('addReminderDate').value = '';
+            document.getElementById('updateReminderID').value = id;
+            document.getElementById('addReminderForm').submit();
+        });
+        rowNode.appendChild(document.createTextNode(row.title));
+
+        index = new Date(row.date);
+        
+        index = index.getDate() - 1;
+        //console.log(index);
+        dayElements[index].appendChild(rowNode);
+    }
+}
+
+//This attaches a function to oReq that will handle responses from the server.
+oReq.addEventListener("load", populateTable);
+
+
     var dayElements = [];
     var monthNames = ["January", "February", "March", "April", "May", "June",
                         "July", "August", "September", "October", "November", "December"];
@@ -67,6 +133,7 @@ function makeDayTable(month, year) {
         //console.log(addReminder.value);
         addReminder.addEventListener('click', function() {
             //alert(this.value);
+            document.getElementById('updateReminderID').value = '';
             document.getElementById('addReminderDate').value = this.value;
             document.getElementById('addReminderForm').submit();
         });
@@ -78,15 +145,19 @@ function makeDayTable(month, year) {
     }
 };
 
-function populateTable(month, year) {
-    //call controller here.
-    txt = document.createTextNode('Example Reminder')
-    dayElements[6].appendChild(txt);
+function getMonthData(month, year) {
+    console.log('sending message');
+    oReq.open("POST", "/templates/calendarController.php");
+    oReq.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+    numUsers = JSON.stringify({ "month": month + 1, 'year': year });//adding 1 to month for sql
+    oReq.send(numUsers);
 };
+
+
 var date = new Date();
 date.setDate(1);//all months have a day 1
 makeDayTable(date.getMonth(), date.getFullYear());
-populateTable(date.getMonth(), date.getFullYear());
+getMonthData(date.getMonth(), date.getFullYear());
 
 var prevMonth = document.getElementById('prevMonth');
 var nextMonth = document.getElementById('nextMonth');
@@ -101,7 +172,7 @@ prevMonth.addEventListener('click', function () {
         date.setFullYear(date.getFullYear() - 1);
     }
     makeDayTable(date.getMonth(), date.getFullYear());
-    populateTable(date.getMonth(), date.getFullYear());
+    getMonthData(date.getMonth(), date.getFullYear());
 });
 
 nextMonth.addEventListener('click', function () {
@@ -114,7 +185,7 @@ nextMonth.addEventListener('click', function () {
         date.setFullYear(date.getFullYear() + 1);
     }
     makeDayTable(date.getMonth(), date.getFullYear());
-    populateTable(date.getMonth(), date.getFullYear());
+    getMonthData(date.getMonth(), date.getFullYear());
 });
 
 </script>

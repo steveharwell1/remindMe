@@ -2,15 +2,15 @@
  include_once '../utils/login_required.php';
  include_once '../db/test_db.php';
  include '../utils/debug.php';
- include 'header.php';
+ //include 'header.php';
 
 ?>
 
 <form action ="" method="GET">
-	Group ID 	<input type="text" name="GroupID" value=""/><br><br>
-	Group name	<input type="text" name="GroupName" value=""/><br><br>
-	Group owner	<input type="text" name="GroupOwner" value=""/><br><br>
-	Super group	<input type="text" name="SuperGroup" value=""/><br><br>
+	Group ID 	<input type="text" name="GroupID" value=""/><br>
+	Group name	<input type="text" name="GroupName" value=""/><br>
+	Group owner	<input type="text" name="GroupOwner" value=""/><br>
+	Super group	<input type="text" name="SuperGroup" value=""/><br>
 	<input type="submit" name="submit" value="submit"/>
 </form>
 
@@ -41,5 +41,5 @@ if($_GET['submit'])
 
 ?>
 <?php
-include '/templates/footer.php';
+//include '/templates/footer.php';
 ?>

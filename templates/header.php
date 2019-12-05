@@ -13,19 +13,20 @@ session_start();
 <body>
     <header>
         <nav>
-            <a>Link 1</a>
-            <a>Link 2</a>
+
             <?php if(isset($_SESSION['user_id'])) {?>
+            <div>Hello <?php echo $_SESSION['user_first_name']; ?></div>
             <form action="/utils/logout_user.php" method="POST">
                 <button type="submit" name="submit">Logout</button>
             </form>
             <?php }?>
+            <?php if(isset($_SESSION['errors']) && count($_SESSION['errors']) > 0) {
+                echo '<div id="error-container" class = "red">';
+                while (count($_SESSION['errors']) > 0) {
+                    echo '<p>'.array_pop($_SESSION['errors']).'</p>';
+                }
+                echo '</div>';
+            } ?>
         </nav>
-        <?php if(isset($_SESSION['errors']) && count($_SESSION['errors']) > 0) {
-        echo '<div id="error-container">';
-        while (count($_SESSION['errors']) > 0) {
-            echo '<p>'.array_pop($_SESSION['errors']).'</p>';
-        }
-        echo '</div>';
-        } ?>
+
     </header>  
