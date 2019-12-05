@@ -145,8 +145,6 @@ else {
     }
 }
 
-
-
 //header('Location: https://remindme.business/index.php');
 header('Location: /index.php');
 ?>
