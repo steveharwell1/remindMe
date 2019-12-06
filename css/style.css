@@ -148,3 +148,14 @@ ul, ol {
     width: 1.3em;
     height: 1.3em;
 }
+
+.groupDelete, .groupLeave, .kickUser {
+    background-color: red; 
+    margin-left: auto;
+}
+
+.groups {
+    display: flex;
+     border-bottom: 1px solid black;
+      width: 100%;
+}
