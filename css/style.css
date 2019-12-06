@@ -125,9 +125,22 @@ ul, ol {
     margin: 0 0 0 1.5em;
 }
 
-.job {
+.surround {
     display:flex;
     margin: 0 .1em .1em .1em;
+    align-items: flex-start;
+}
+
+.job {
+    display: flex;
+    width: 100%;
+}
+
+.surround a {
+    justify-self: flex-end;
+    font-size: .5em;
+    color: red;
+    text-decoration: none;
 }
 
 .job:hover, .job:active {

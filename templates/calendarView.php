@@ -38,7 +38,7 @@ function populateTable () {
     for( row of message['data']) {
         rowNode = document.createElement('div');
         rowNode.style.color = row.color;
-        rowNode.className = 'job';
+        rowNode.classList.add('job');
 
         rowType = document.createElement('i');
         rowNode.appendChild(rowType);
@@ -73,11 +73,21 @@ function populateTable () {
         });
         rowNode.appendChild(document.createTextNode(row.title));
 
+        surround = document.createElement('div');
+        surround.classList.add('surround');
+        surround.classList.add('group' + row.group);
+        surround.appendChild(rowNode);
+        
+        butt = document.createElement('a');
+        butt.innerText = 'Del';
+        butt.href = '/controllers/deleteJobController.php?delete=' + row.id;
+        surround.appendChild(butt);
+        
         index = new Date(row.date);
         
         index = index.getDate() - 1;
         //console.log(index);
-        dayElements[index].appendChild(rowNode);
+        dayElements[index].appendChild(surround);
     }
 }
 
@@ -88,6 +98,36 @@ oReq.addEventListener("load", populateTable);
     var dayElements = [];
     var monthNames = ["January", "February", "March", "April", "May", "June",
                         "July", "August", "September", "October", "November", "December"];
+    // groupChooser = document.createElement('span');
+    // groupChooserInput = document.createElement('input');
+    // groupChooserBtn = document.createElement('btn');
+    // groupChooserBtn.innerText = 'Filter';
+    // groupChooser.appendChild(groupChooserInput);
+    // groupChooser.appendChild(groupChooserBtn);
+
+
+    // function groupFilter (e) {
+    //     v = e.value;
+    //     if(v == '') {
+    //         rows = Array.from(document.querySelectorAll('.surround'));
+    //         for(row of rows){
+    //             row.style.display = '';
+    //             //console.log(row);
+    //         }
+    //         return;
+    //         }
+    //     rows = Array.from(document.querySelectorAll('.surround.group' + v));
+    //     for(row of rows){
+    //         row.style.display = '';
+    //         //console.log(row);
+    //     }
+    //     rows = Array.from(document.querySelectorAll('.surround:not(.group' + v + ')'));
+    //     for(row of rows){
+    //         row.style.display = 'none';
+    //         //console.log(row);
+    //     }
+    // });
+
 function makeDayTable(month, year) {
     dayElements = [];
     monthElem = document.getElementById('monthName');
@@ -97,6 +137,7 @@ function makeDayTable(month, year) {
     //first day of Month
     firstDay = new Date(year, month);
     monthElem.innerText = monthNames[firstDay.getMonth()] + " " + firstDay.getFullYear();
+    //monthElem.appendChild(groupChooser);
     blanks = firstDay.getDay();
     numDays = new Date(year, month+1, 0).getDate();//add one to month because 0th day is last day of previous month.
     firstRow = document.createElement('tr');
