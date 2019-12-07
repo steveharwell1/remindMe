@@ -129,7 +129,7 @@
             $sql2 = "SELECT *
             FROM GROUPS
             WHERE GROUP_OWNER = $userid
-            ORDER BY GROUP_OWNER";
+            ORDER BY GROUP_ID";
             $result2 = mysqli_query($db, $sql2);
 
             // display groups user is owner of and display personal group first if not group connected to job
