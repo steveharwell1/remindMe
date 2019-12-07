@@ -61,8 +61,8 @@ else if(isset($_POST['kickUserID']))
     $kickedUser = $params[0];
     $kickingGroup = $params[1];
      $sql = "DELETE FROM USERS_GROUPS
-     WHERE USERS_GROUPS.MEMBER_ID = ".$kickedUser."
-    and USERS_GROUPS.GROUP_ID = ".$kickingGroup;
+     WHERE USERS_GROUPS.MEMBER_ID = $kickedUser
+     AND USERS_GROUPS.GROUP_ID = $kickingGroup";
      $result = mysqli_query($db, $sql);
  }
 else if (isset($_POST['joinGroupID']))
@@ -82,7 +82,7 @@ else if(isset($_POST['acceptDeclineUserID']))
     $pendinguserID = $params[1];
     $groupID = $params[2];
     $sql = "UPDATE USERS_GROUPS
-    SET MEMBERSHIP_STATUS = $acceptdecline
+    SET MEMBERSHIP_STATUS = '$acceptdecline'
     WHERE MEMBER_ID = $pendinguserID
     AND GROUP_ID = $groupID";
     $result = mysqli_query($db, $sql);
