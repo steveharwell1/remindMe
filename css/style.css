@@ -115,6 +115,7 @@ form#jobform {
 {
     padding: 0 1em 0 1em;
     overflow-y: scroll;
+    background: hsla(120, 12%, 97%, 0.40);
 }
 
 h2 {
@@ -240,17 +241,17 @@ ul, ol {
     border: 1px solid rgb(232, 232, 238);
     box-sizing: border-box;
 }
-/*
+
+
 .winter .day{
-    background: hsl(120, 14%, 97%);
+    background: hsla(120, 12%, 97%, 0.75);
 }
 .summer .day{
-    background: hsl(120, 14%, 97%);
+    background: hsla(120, 12%, 97%, 0.75);
 }
 .spring .day{
-    background:  hsl(120, 14%, 97%);
+    background:  hsla(120, 12%, 97%, 0.75);
 }
 .autumn .day{
-    background: hsl(120, 14%, 97%);
+    background: hsla(120, 12%, 97%, 0.75);
 }
-*/
