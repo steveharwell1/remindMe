@@ -115,6 +115,7 @@ form#jobform {
 {
     padding: 0 1em 0 1em;
     overflow-y: scroll;
+    background: hsla(120, 12%, 97%, 0.40);
 }
 
 h2 {
