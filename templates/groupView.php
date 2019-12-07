@@ -8,7 +8,7 @@
 ?>
 
 <!-- forms for buttons that will be connected via javascript -->
-<form id = "deleteGroupForm" action = "/controllers/groupController.php" method = "GET" style = "display: none;">
+<form id = "deleteGroupForm" action = "/controllers/groupController.php" method = "POST" style = "display: none;">
 	<input id = "deleteGroup" name = "groupID" />
 </form>
 <form id = "kickUserForm" action = "/controllers/groupController.php" method = "POST" style = "display: none;">
