@@ -82,9 +82,9 @@ else if(isset($_POST['acceptDeclineUserID']))
     $pendinguserID = $params[1];
     $groupID = $params[2];
     $sql = "UPDATE USERS_GROUPS
-    SET MEMBERSHIP_STATUS = ".$acceptdecline."
-    WHERE MEMBER_ID = ".$pendinguserID. "
-    AND GROUP_ID = ".$groupID;
+    SET MEMBERSHIP_STATUS = $acceptdecline
+    WHERE MEMBER_ID = $pendinguserID
+    AND GROUP_ID = $groupID";
     $result = mysqli_query($db, $sql);
 
 }
