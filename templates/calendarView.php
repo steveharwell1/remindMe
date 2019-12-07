@@ -110,6 +110,7 @@ function makeDayTable(month, year) {
     //first day of Month
     firstDay = new Date(year, month);
     monthElem.innerText = monthNames[firstDay.getMonth()] + " " + firstDay.getFullYear();
+    document.getElementsByTagName('html')[0].className = "";
     document.getElementsByTagName('html')[0].classList.add(monthImages[firstDay.getMonth()]);
     //monthElem.appendChild(groupChooser);
     blanks = firstDay.getDay();
