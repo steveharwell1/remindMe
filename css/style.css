@@ -199,7 +199,8 @@ ul, ol {
 }
 .autumn {
     background-image: url("/css/flower.jpg");
-    background-repeat: round;
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 .autumn input, .autumn select, .autumn button{
     background-image: url("/css/flower.jpg");
@@ -210,7 +211,8 @@ ul, ol {
 }
 .spring {
     background-image: url("/css/Summer.webp");
-    background-repeat: round;
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 .spring input, .spring select, .spring button{
     background-image: url("/css/Summer.webp");
@@ -221,7 +223,8 @@ ul, ol {
 }
 .summer {
     background-image: url("/css/watercolour.webp");
-    background-repeat: round;
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 .summer input, .summer select, .summer button{
     background-image: url("/css/watercolour.webp");
@@ -232,7 +235,8 @@ ul, ol {
 }
 .winter{
     background-image: url("/css/Winter.jpg");
-    background-repeat: round;
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 .winter input, .winter select, .winter button{
     background-image: url("/css/Winter.jpg");
