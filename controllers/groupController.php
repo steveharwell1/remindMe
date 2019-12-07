@@ -10,31 +10,59 @@ require_once '../db/test_db.php';
 $contents = file_get_contents('php://input');
 $json = json_decode($contents);
 
+
 //Controller logic
-$id = $_SESSION['user_id'];
+$userID = $_SESSION['user_id'];
 
 //remember that if you take user input and pass it into a query that you need to sanitize the input
 //or use prepared statements.
 // $sql = "SELECT * FROM USERS";
 // $result = mysqli_query($db, $sql);
 // $count = mysqli_num_rows($result);
-$groupID = $_SESSION['GROUP_ID']
-$groupName = mysqli_real_escape_string($db, $_POST["groupName"]);
-$groupOwner = mysqli_real_escape_string($db, $_POST["groupOwner"]);
-$superGroup = mysqli_real_escape_string($db, $_POST["superGroup"]);
 
-if(!empty($deleteGroup)){
-    $sql = SELECT * FROM 'GROUPS' WHERE GROUPS.GROUP_ID = ".$deleteGroup;
-
-}
-if ($groupid == 0) {  
+if(isset($_POST['groupName']))
+{
+    $groupName = mysqli_real_escape_string($db, $_POST['groupName']);
+    $superGroup = mysqli_real_escape_string($db, $_POST['superGroup']);
     $sql = "INSERT INTO GROUPS
     (GROUP_ID, GROUP_NAME, GROUP_OWNER, SUPER_GROUP)
-    VALUES (NULL, '$groupName','$groupOwner' , NULL)";
+    VALUES (NULL, '$groupName','$userID' , $superGroup)";
     $result = mysqli_query($db, $sql);
 
-    //get id of job created
-    $jobid = $db->insert_id;
+    
+}
+else if(isset($_POST['deleteGroupID']))
+{
+    $deleteGroupID= mysqli_real_escape_string($db, $_POST['deleteGroupID']);
+}
+else if(isset($_POST['leaveGroupID']))
+{
+    $leaveGroupID= mysqli_real_escape_string($db, $_POST['leaveGroupID']);
+}
+else if(isset($_POST['kickUserID']))
+{
+     $kickuserID =mysqli_real_escape_string($db, $_POST['kickUserID']);
+}
+else if(isset($_POST['joinGroupID']))
+{
+    $joinGroupID = mysqli_real_escape_string($db, $_POST['joinGroupID']);
+}
+
+
+
+   
+
+
+
+if(!empty($deleteGroup)){
+    $sql = "SELECT * 
+    FROM 'GROUPS'
+    WHERE GROUPS.GROUP_ID = $deleteGroup";
+
+}
+
+
+
 
 
 
@@ -54,3 +82,5 @@ if ($groupid == 0) {
 
 // //close database connection
 // mysqli_close($db);
+
+?>
