@@ -18,23 +18,35 @@ $id = $_SESSION['user_id'];
 // $sql = "SELECT * FROM USERS";
 // $result = mysqli_query($db, $sql);
 // $count = mysqli_num_rows($result);
+$groupID = $_SESSION['GROUP_ID']
+$groupName = mysqli_real_escape_string($db, $_POST["groupName"]);
+$groupOwner = mysqli_real_escape_string($db, $_POST["groupOwner"]);
+$superGroup = mysqli_real_escape_string($db, $_POST["superGroup"]);
+
+if(!empty($deleteGroup)){
+    $sql = SELECT * FROM 'GROUPS' WHERE GROUPS.GROUP_ID = ".$deleteGroup;
+
+}
+if ($groupid == 0) {  
+    $sql = "INSERT INTO GROUPS
+    (GROUP_ID, GROUP_NAME, GROUP_OWNER, SUPER_GROUP)
+    VALUES (NULL, '$groupName','$groupOwner' , NULL)";
+    $result = mysqli_query($db, $sql);
+
+    //get id of job created
+    $jobid = $db->insert_id;
 
 
 
-//turn sql result into php array object
-$group = Array('name' => 'Birthday Planning');
 
-//Send Data at the end
-$data = Array( 'data' => $contents, 'action' => 'create');
-header('Content-Type: application/json');
-echo json_encode($data);
+
 
 //Insert data into the database
-$groupName = $group['name'];
-$sql = "INSERT INTO `GROUPS` 
-(`GROUP_NAME`, `GROUP_OWNER`, `SUPER_GROUP`) 
-VALUES ($groupName, $id, NULL);";
-$result = mysqli_query($db, $sql);
+//$groupName = $group['name'];
+//$sql = "INSERT INTO `GROUPS` 
+//(`GROUP_NAME`, `GROUP_OWNER`, `SUPER_GROUP`) 
+//VALUES ($groupName, $id, NULL);";
+//$result = mysqli_query($db, $sql);
 
 
 //close result array
