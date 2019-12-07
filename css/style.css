@@ -137,10 +137,12 @@ ul, ol {
 }
 
 .surround a {
+
     justify-self: flex-end;
-    font-size: .5em;
+    font-size: 1em;
     color: red;
     text-decoration: none;
+    font-weight: bold;
 }
 
 .job:hover, .job:active {
@@ -152,14 +154,15 @@ ul, ol {
     flex: 0 0 1.3em;
     margin-right: .2em;
     font-style: normal;
-
     justify-content: center;
     align-items: center;
     border-radius: 50%;
-    background-color:darkblue;
-    color: rgb(204, 115, 13);
+    background-color: rgba(0, 0, 255, .50);
+    color:rgb(255, 255, 255);
     width: 1.3em;
     height: 1.3em;
+    font-weight: bold;
+    font-family: sans-serif;
 }
 
 .groupDelete {

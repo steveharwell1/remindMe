@@ -79,7 +79,7 @@ function populateTable () {
         surround.appendChild(rowNode);
         if(row.owns){
             butt = document.createElement('a');
-            butt.innerText = '🗑';
+            butt.innerText = 'X';
             butt.href = '/controllers/deleteJobController.php?delete=' + row.id;
             surround.appendChild(butt);
         }
