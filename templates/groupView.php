@@ -26,7 +26,7 @@
 
 <form action = "/controllers/groupController.php" method = "post" id = "createGroupForm">
 <input type = "text" name = "groupName" placeholder = "Group Name"/>
- Super Group: <select name = "group">
+ Super Group: <select name = "superGroup">
 <?php
 	// find groups user is in
 	$sql = "SELECT * 
