@@ -116,6 +116,7 @@ form#jobform {
 {
     padding: 0 1em 0 1em;
     overflow-y: scroll;
+    background: hsla(120, 12%, 97%, 0.40);
 }
 
 h2 {
@@ -137,10 +138,12 @@ ul, ol {
 }
 
 .surround a {
+
     justify-self: flex-end;
-    font-size: .5em;
+    font-size: 1em;
     color: red;
     text-decoration: none;
+    font-weight: bold;
 }
 
 .job:hover, .job:active {
@@ -152,14 +155,15 @@ ul, ol {
     flex: 0 0 1.3em;
     margin-right: .2em;
     font-style: normal;
-
     justify-content: center;
     align-items: center;
     border-radius: 50%;
-    background-color:darkblue;
-    color: rgb(204, 115, 13);
+    background-color: rgba(0, 0, 255, .50);
+    color:rgb(255, 255, 255);
     width: 1.3em;
     height: 1.3em;
+    font-weight: bold;
+    font-family: sans-serif;
 }
 
 .groupDelete {
@@ -200,7 +204,8 @@ ul, ol {
 
 .autumn {
     background-image: url("/css/flower.jpg");
-    background-repeat: round;
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 .autumn input, .autumn select, .autumn button{
     background-image: url("/css/flower.jpg");
@@ -211,7 +216,8 @@ ul, ol {
 }
 .spring {
     background-image: url("/css/Summer.webp");
-    background-repeat: round;
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 .spring input, .spring select, .spring button{
     background-image: url("/css/Summer.webp");
@@ -222,7 +228,8 @@ ul, ol {
 }
 .summer {
     background-image: url("/css/watercolour.webp");
-    background-repeat: round;
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 .summer input, .summer select, .summer button{
     background-image: url("/css/watercolour.webp");
@@ -233,7 +240,8 @@ ul, ol {
 }
 .winter{
     background-image: url("/css/Winter.jpg");
-    background-repeat: round;
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 .winter input, .winter select, .winter button{
     background-image: url("/css/Winter.jpg");
@@ -242,17 +250,17 @@ ul, ol {
     border: 1px solid rgb(232, 232, 238);
     box-sizing: border-box;
 }
-/*
+
+
 .winter .day{
-    background: hsl(120, 14%, 97%);
+    background: hsla(120, 12%, 97%, 0.75);
 }
 .summer .day{
-    background: hsl(120, 14%, 97%);
+    background: hsla(120, 12%, 97%, 0.75);
 }
 .spring .day{
-    background:  hsl(120, 14%, 97%);
+    background:  hsla(120, 12%, 97%, 0.75);
 }
 .autumn .day{
-    background: hsl(120, 14%, 97%);
+    background: hsla(120, 12%, 97%, 0.75);
 }
-*/
