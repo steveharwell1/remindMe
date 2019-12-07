@@ -110,6 +110,7 @@ form#jobform {
     padding: 10px;
     width: 300px;
     margin: 0 auto;
+    background: hsla(120, 12%, 97%, 0.80);
 }
 
 #CategoryView, #groupView
