@@ -102,7 +102,7 @@
 				echo "<ul>";
 				while($row2 = $result2->fetch_assoc()) {
 					echo "<li>" . $row2['USER_FIRST_NAME'] . " " . $row2['USER_LAST_NAME'];
-					echo "<button type = 'button' class = 'kickUser' value = " . $row['USER_ID'] . ">Kick</button></li>";
+					echo "<button type = 'button' class = 'kickUser' value = " . $row2['USER_ID'] . "::" . $row['GROUP_ID'] . ">Kick</button></li>";
 				}
 				echo "</ul>";
 			}
