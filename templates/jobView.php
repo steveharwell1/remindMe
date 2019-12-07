@@ -28,7 +28,7 @@
 
         if ($result->num_rows > 0) {
             $row = $result->fetch_assoc();
-            $title = $row['TITLE'];
+            $title = htmlspecialchars($row['TITLE']);
             $jobDateTime = $row['DUE_DATE'];
             $jobDate = date('Y-m-d', strtotime($jobDateTime));
             $jobTime = date('H:i', strtotime($jobDateTime));
@@ -40,7 +40,7 @@
             //$repeat;
             $type = $row['JOB_TYPE'];
             $groupID = $row['GROUP_ID'];
-            $message = $row['COMMENT'];
+            $message = htmlspecialchars($row['COMMENT']);
         }
     }
     else {
@@ -55,30 +55,30 @@
 
     <!-- text field for job title -->
     Job Name <span class = "red">*</span><br>
-    <input type = "text" name = "jobname" value = "<?php echo $title; ?>"><br>
+    <input type = "text" name = "jobname" value = "<?php echo $title; ?>" required><br>
 
     <!-- date field for date of job -->
     Date of Event <span class = "red">*</span><br>
-    <input type = "date" name = "duedate" value = "<?php echo $jobDate; ?>" />
+    <input type = "date" name = "duedate" value = "<?php echo $jobDate; ?>" required/>
     <?php 
         if(isset($_POST['reminderID']) && !empty($_POST['reminderID'])) {
-            echo "<input type = 'time' name = 'duetime' value = " . $jobTime . ">";
+            echo "<input type = 'time' name = 'duetime' value = " . $jobTime . "required>";
         }
         else {
-            echo "<input type = 'time' name = 'duetime' value = '12:00'>";
+            echo "<input type = 'time' name = 'duetime' value = '12:00' required>";
         }
         ?>
     <br>
 
     <!-- reminder date -->
     Date to be Reminded <span class = "red">*</span><br>
-    <input type = "date" name = "remindDate" value = "<?php echo $reminderDate; ?>" />
+    <input type = "date" name = "remindDate" value = "<?php echo $reminderDate; ?>" required/>
     <?php 
         if(isset($_POST['reminderID']) && !empty($_POST['reminderID'])) {
-            echo "<input type = 'time' name = 'remindTime' value = " . $reminderTime . ">";
+            echo "<input type = 'time' name = 'remindTime' value = " . $reminderTime . "required>";
         }
         else {
-            echo "<input type = 'time' name = 'remindTime' value = '12:00'>";
+            echo "<input type = 'time' name = 'remindTime' value = '12:00' required>";
         }
         ?>
     <br>
@@ -103,7 +103,7 @@
     <!-- radio to select type of job -->
     Type: <span class = "red">*</span>
     <div style = "margin: 10px; margin-left: 0px">
-        <input type = "radio" name = "Type" value = "DEADLINE" <?php if ($type == "DEADLINE") {echo "checked";} ?>>
+        <input type = "radio" name = "Type" value = "DEADLINE" checked>
         <label for = "DEADLINE">Deadline</label><br>
         <input type = "radio" name = "Type" value = "INFORMATIONAL" <?php if ($type == "INFORMATIONAL") {echo "checked";} ?>>
         <label for = "INFORMATIONAL">Informational</label><br>

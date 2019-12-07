@@ -4,42 +4,214 @@
  include '../utils/debug.php';
  //include 'header.php';
 
+ $userid = $_SESSION['user_id'];
 ?>
 
-<form action ="" method="GET">
-	Group ID 	<input type="text" name="GroupID" value=""/><br>
-	Group name	<input type="text" name="GroupName" value=""/><br>
-	Group owner	<input type="text" name="GroupOwner" value=""/><br>
-	Super group	<input type="text" name="SuperGroup" value=""/><br>
-	<input type="submit" name="submit" value="submit"/>
+<!-- forms for buttons that will be connected via javascript -->
+<form id = "deleteGroupForm" action = "/controllers/groupController.php" method = "POST" style = "display: none;">
+	<input id = "deleteGroup" name = "deleteGroupID" />
+</form>
+<form id = "kickUserForm" action = "/controllers/groupController.php" method = "POST" style = "display: none;">
+	<input id = "kickUser" name = "kickUserID" />
+</form>
+<form id = "leaveGroupForm" action = "/controllers/groupController.php" method = "POST" style = "display: none;">
+	<input id = "leaveGroup" name = "leaveGroupID" />
+</form>
+
+<h2>GROUPS</h2>
+<div style = "display: flex;">
+<h3>My Groups</h3>
+<button type = "button" id = "createGroup">+</button>
+</div>
+
+<form action = "/controllers/groupController.php" method = "post" id = "createGroupForm">
+<input type = "text" name = "groupName" placeholder = "Group Name"/>
+ Super Group: <select name = "superGroup">
+<?php
+	// find groups user is in
+	$sql = "SELECT * 
+	FROM GROUPS 
+	INNER JOIN USERS_GROUPS 
+	ON GROUPS.GROUP_ID = USERS_GROUPS.GROUP_ID
+	WHERE MEMBER_ID = $userid
+	ORDER BY GROUP_ID";
+	$result = mysqli_query($db, $sql);
+
+	// find groups user is owner of
+	$sql2 = "SELECT *
+	FROM GROUPS
+	WHERE GROUP_OWNER = $userid
+	ORDER BY GROUP_OWNER";
+	$result2 = mysqli_query($db, $sql2);
+
+	//add option for no super group
+	echo "<option value = ''>None</option>";
+
+	// display groups user is owner of and display personal group first if not group connected to job
+	if ($result2->num_rows > 0) {
+		while($row2 = $result2->fetch_assoc()) {
+			echo "<option value = " . $row2['GROUP_ID'];
+			echo ">" . $row2['GROUP_NAME'] . "</option>";
+		}
+	}
+
+	// display groups user is a part of and display group job is connected to
+	if ($result->num_rows > 0) {
+		while($row = $result->fetch_assoc()) {
+			echo "<option value = " . $row['GROUP_ID'];
+			echo ">" . $row['GROUP_NAME'] . "</option>";
+		}
+	}
+?>
+</select>
+<button type = "submit" value = "create">Create</button>
 </form>
 
 <?php
-if($_GET['submit'])
-{
-	$groupID = mysqli_real_escape_string($db, $_GET['GroupID']);
-	$groupName= $_GET['GroupName'];
-	$groupOwner= $_GET['GroupOwner'];
-	$superGroup= $_GET['SuperGroup'];
-	if(!empty($_GET['GroupID']) && !empty($_GET['GroupName']) && $groupOwner!="" && $superGroup!="")
-	{
-		$query= "INSERT INTO GROUPS VALUES('$groupID', '$groupName',
-				'$groupOwner', '$superGroup')";
-		$data= mysqli_query($db,$query);
-		if($data)
-		{
-			echo "Data inserted into Database";
-		} else {
+	// find groups user is owner of
+	$sql = "SELECT *
+	FROM GROUPS
+	WHERE GROUP_OWNER = $userid
+	ORDER BY GROUP_ID";
+	$result = mysqli_query($db, $sql);
 
+	// display result
+	$first = true;
+	if ($result->num_rows > 0) {
+		while($row = $result->fetch_assoc()) {
+			echo "<div class = 'groups'>";
+			echo "<button type = 'button' class = 'groupFilter' value = " . $row['GROUP_ID'] . ">☐</button>";
+			echo $row['GROUP_NAME'];
+			if (! $first) {
+				echo "<button type = 'button' class = 'groupDelete' value = " . $row['GROUP_ID'] . ">Destroy</button>";
+			}
+			else {
+				$first = false;
+			}
+			echo "</div>";
+
+			//find users in group
+			$sql2 = "SELECT *
+			FROM USERS_GROUPS
+			INNER JOIN USERS
+			ON USERS_GROUPS.MEMBER_ID = USERS.USER_ID
+			WHERE USERS_GROUPS.GROUP_ID = " . $row['GROUP_ID'];
+			$result2 = mysqli_query($db, $sql2);
+
+			if ($result2->num_rows > 0) {
+				echo "<ul>";
+				while($row2 = $result2->fetch_assoc()) {
+					echo "<li>" . $row2['USER_FIRST_NAME'] . " " . $row2['USER_LAST_NAME'];
+					echo "<button type = 'button' class = 'kickUser' value = " . $row2['USER_ID'] . "::" . $row['GROUP_ID'] . ">Kick</button></li>";
+				}
+				echo "</ul>";
+			}
 		}
 	}
-	else
-	{
-		echo "All fields are required";
+?>
+
+<br>
+<div style = "display: flex;">
+<h3>My Memberships</h3>
+<form action = "/controllers/groupController.php" method = "post" id = "joinGroupForm">
+<input type = "text" name = "joinGroupID">
+<button type = "submit" value = "join">Join</button>
+</form>
+</div>
+
+<?php
+	//find groups user is member of
+	$sql = "SELECT *
+	FROM USERS_GROUPS
+	INNER JOIN GROUPS
+	ON USERS_GROUPS.GROUP_ID = GROUPS.GROUP_ID
+	WHERE USERS_GROUPS.MEMBER_ID = $userid
+	AND USERS_GROUPS.MEMBERSHIP_STATUS = 'ACCEPTED'";
+	$result = mysqli_query($db, $sql);
+
+	if ($result->num_rows > 0) {
+		while($row = $result->fetch_assoc()) {
+			echo "<div class = 'groups'>";
+			echo "<button type = 'button' class = 'groupFilter' value = " . $row['GROUP_ID'] . ">☐</button>";
+			echo $row['GROUP_NAME'];
+			echo "<button type = 'button' class = 'groupLeave' value = " . $row['GROUP_ID'] . ">Leave</button>";
+			echo "</div>";
+		}
+		echo "</ul>";
 	}
+?>
+
+<script>
+groupFilters = Array.from(document.querySelectorAll('.groupFilter'));
+//console.log(groupFilters.length);
+
+
+for(let filter of groupFilters) {
+
+	filter.addEventListener('click', function () {
+		v = filter.value;
+		groupFil = Array.from(document.querySelectorAll('.groupFilter'));
+			for(g of groupFil){
+				g.innerText = "☐";
+				g.value = Math.abs(g.value);
+			}
+		filter.value = filter.value * -1;
+		if(v > 0)
+		{
+			filter.innerText = "☑";
+		
+			rows = Array.from(document.querySelectorAll('.surround.group' + v));
+			for(row of rows){
+				row.style.display = '';
+				//console.log(row);
+			}
+			rows = Array.from(document.querySelectorAll('.surround:not(.group' + v + ')'));
+			for(row of rows){
+				row.style.display = 'none';
+				//console.log(row);
+			}
+		} else {
+			rows = Array.from(document.querySelectorAll('.surround'));
+			for(row of rows){
+				row.style.display = '';
+				//console.log(row);
+			}
+		}
+	});
+}
+//create arrays for each group of buttons created
+deleteGroupButtons = Array.from(document.querySelectorAll(".groupDelete"));
+console.log(deleteGroupButtons.length);
+kickButtons = Array.from(document.querySelectorAll(".kickUser"));
+console.log(kickButtons.length);
+leaveGroupButtons = Array.from(document.querySelectorAll(".groupLeave"));
+console.log(leaveGroupButtons.length);
+
+// adding click event to delete group buttons
+for(row of deleteGroupButtons) {
+	let val = row.value;
+	row.addEventListener('click', function () {
+		document.getElementById('deleteGroup').value = val;
+		document.getElementById('deleteGroupForm').submit();
+	});
 }
 
-?>
-<?php
-//include '/templates/footer.php';
-?>
+// adding click event to kick user buttons
+for(row of kickButtons) {
+	let val = row.value;
+	row.addEventListener('click', function () {
+		document.getElementById('kickUser').value = val;
+		document.getElementById('kickUserForm').submit();
+	});
+}
+
+// adding click event to leave group buttons
+for(row of leaveGroupButtons) {
+	let val = row.value;
+	row.addEventListener('click', function () {
+		document.getElementById('leaveGroup').value = val;
+		document.getElementById('leaveGroupForm').submit();
+	});
+}
+
+</script>

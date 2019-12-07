@@ -38,7 +38,7 @@ function populateTable () {
     for( row of message['data']) {
         rowNode = document.createElement('div');
         rowNode.style.color = row.color;
-        rowNode.className = 'job';
+        rowNode.classList.add('job');
 
         rowType = document.createElement('i');
         rowNode.appendChild(rowType);
@@ -73,11 +73,21 @@ function populateTable () {
         });
         rowNode.appendChild(document.createTextNode(row.title));
 
+        surround = document.createElement('div');
+        surround.classList.add('surround');
+        surround.classList.add('group' + row.group);
+        surround.appendChild(rowNode);
+        if(row.owns){
+            butt = document.createElement('a');
+            butt.innerText = '🗑';
+            butt.href = '/controllers/deleteJobController.php?delete=' + row.id;
+            surround.appendChild(butt);
+        }
         index = new Date(row.date);
         
         index = index.getDate() - 1;
         //console.log(index);
-        dayElements[index].appendChild(rowNode);
+        dayElements[index].appendChild(surround);
     }
 }
 
@@ -88,6 +98,9 @@ oReq.addEventListener("load", populateTable);
     var dayElements = [];
     var monthNames = ["January", "February", "March", "April", "May", "June",
                         "July", "August", "September", "October", "November", "December"];
+    var monthImages = ["winter", "winter", "spring", "spring", "spring", "summer",
+                        "summer", "summer", "autumn", "autumn", "autumn", "winter"];
+
 function makeDayTable(month, year) {
     dayElements = [];
     monthElem = document.getElementById('monthName');
@@ -97,6 +110,9 @@ function makeDayTable(month, year) {
     //first day of Month
     firstDay = new Date(year, month);
     monthElem.innerText = monthNames[firstDay.getMonth()] + " " + firstDay.getFullYear();
+    document.getElementsByTagName('html')[0].className = "";
+    document.getElementsByTagName('html')[0].classList.add(monthImages[firstDay.getMonth()]);
+    //monthElem.appendChild(groupChooser);
     blanks = firstDay.getDay();
     numDays = new Date(year, month+1, 0).getDate();//add one to month because 0th day is last day of previous month.
     firstRow = document.createElement('tr');
