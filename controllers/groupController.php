@@ -26,7 +26,7 @@ if(isset($_POST['groupName']))
     $superGroup = mysqli_real_escape_string($db, $_POST['superGroup']);
     $sql = "INSERT INTO GROUPS
     (GROUP_ID, GROUP_NAME, GROUP_OWNER, SUPER_GROUP)
-    VALUES (NULL, '$groupName','$userID' , $superGroup)";
+    VALUES (NULL, '$groupName', '$userID', NULL)";
     $result = mysqli_query($db, $sql);
 
     
@@ -34,6 +34,9 @@ if(isset($_POST['groupName']))
 else if(isset($_POST['deleteGroupID']))
 {
     $deleteGroupID= mysqli_real_escape_string($db, $_POST['deleteGroupID']);
+    $sql = "DELETE * FROM GROUPS 
+    WHERE GROUPS.GROUP_ID = $deleteGroupID";
+    $result = mysqli_query($db, $sql);
 }
 else if(isset($_POST['leaveGroupID']))
 {
