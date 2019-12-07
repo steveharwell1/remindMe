@@ -160,12 +160,31 @@ ul, ol {
     width: 1.3em;
     height: 1.3em;
 }
-/*input, select, button{
-    background-color: rgb(252, 252, 248);
-    background-image: linear-gradient(rgb(133, 124, 124), rgb(233, 233, 136));
-}*/
-.groupDelete, .groupLeave, .kickUser {
+
+.groupDelete {
     background-color: #dd5959; 
+    color: black;
+    padding: .2em .5em;
+    align-self: flex-start;
+}
+
+.groupLeave, .kickUser, .decline {
+    background-color: #dd5959;
+    margin-left: auto;
+    color: black;
+    padding: .2em .5em;
+    align-self: flex-start;
+}
+
+.accept {
+    background-color: #5ddd59;
+    margin-left: auto;
+    color: black;
+    padding: .2em .5em;
+    align-self: flex-start;
+}
+
+.invite {
     margin-left: auto;
     color: black;
     padding: .2em .5em;
