@@ -9,13 +9,13 @@
 
 <!-- forms for buttons that will be connected via javascript -->
 <form id = "deleteGroupForm" action = "/controllers/groupController.php" method = "POST" style = "display: none;">
-	<input id = "deleteGroup" name = "groupID" />
+	<input id = "deleteGroup" name = "deleteGroupID" />
 </form>
 <form id = "kickUserForm" action = "/controllers/groupController.php" method = "POST" style = "display: none;">
-	<input id = "kickUser" name = "userID" />
+	<input id = "kickUser" name = "kickUserID" />
 </form>
 <form id = "leaveGroupForm" action = "/controllers/groupController.php" method = "POST" style = "display: none;">
-	<input id = "leaveGroup" name = "groupID" />
+	<input id = "leaveGroup" name = "leaveGroupID" />
 </form>
 
 <h2>GROUPS</h2>
@@ -64,7 +64,7 @@
 	}
 ?>
 </select>
-<button type = "submit" value = "submit">Create</button>
+<button type = "submit" value = "create">Create</button>
 </form>
 
 <?php
@@ -114,7 +114,7 @@
 <div style = "display: flex;">
 <h3>My Memberships</h3>
 <form action = "/controllers/groupController.php" method = "post" id = "joinGroupForm">
-<input type = "text" name = "groupID">
+<input type = "text" name = "joinGroupID">
 <button type = "submit" value = "join">Join</button>
 </form>
 </div>
