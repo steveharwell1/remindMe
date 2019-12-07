@@ -79,7 +79,7 @@ function populateTable () {
         surround.appendChild(rowNode);
         
         butt = document.createElement('a');
-        butt.innerText = 'Del';
+        butt.innerText = '🗑';
         butt.href = '/controllers/deleteJobController.php?delete=' + row.id;
         surround.appendChild(butt);
         
@@ -98,6 +98,8 @@ oReq.addEventListener("load", populateTable);
     var dayElements = [];
     var monthNames = ["January", "February", "March", "April", "May", "June",
                         "July", "August", "September", "October", "November", "December"];
+    var monthImages = ["winter", "winter", "spring", "spring", "spring", "summer",
+                        "summer", "summer", "autumn", "autumn", "autumn", "winter"];
 
 function makeDayTable(month, year) {
     dayElements = [];
@@ -108,6 +110,7 @@ function makeDayTable(month, year) {
     //first day of Month
     firstDay = new Date(year, month);
     monthElem.innerText = monthNames[firstDay.getMonth()] + " " + firstDay.getFullYear();
+    document.getElementsByTagName('html')[0].classList.add(monthImages[firstDay.getMonth()]);
     //monthElem.appendChild(groupChooser);
     blanks = firstDay.getDay();
     numDays = new Date(year, month+1, 0).getDate();//add one to month because 0th day is last day of previous month.
