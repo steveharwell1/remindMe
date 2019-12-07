@@ -162,8 +162,30 @@ ul, ol {
     height: 1.3em;
 }
 
-.groupDelete, .groupLeave, .kickUser {
+.groupDelete {
     background-color: #dd5959; 
+    color: black;
+    padding: .2em .5em;
+    align-self: flex-start;
+}
+
+.groupLeave, .kickUser, .decline {
+    background-color: #dd5959;
+    margin-left: auto;
+    color: black;
+    padding: .2em .5em;
+    align-self: flex-start;
+}
+
+.accept {
+    background-color: #5ddd59;
+    margin-left: auto;
+    color: black;
+    padding: .2em .5em;
+    align-self: flex-start;
+}
+
+.invite {
     margin-left: auto;
     color: black;
     padding: .2em .5em;

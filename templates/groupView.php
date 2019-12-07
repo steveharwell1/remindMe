@@ -17,6 +17,9 @@
 <form id = "leaveGroupForm" action = "/controllers/groupController.php" method = "POST" style = "display: none;">
 	<input id = "leaveGroup" name = "leaveGroupID" />
 </form>
+<form id = "acceptDeclineForm" action = "/controllers/groupController.php" method = "POST" style = "display: none;">
+	<input id = "acceptDecline" name = "acceptDeclineUserID" />
+</form>
 
 <h2>GROUPS</h2>
 <div style = "display: flex;">
@@ -82,6 +85,15 @@
 			echo "<div class = 'groups'>";
 			echo "<button type = 'button' class = 'groupFilter' value = " . $row['GROUP_ID'] . ">&#x2713;</button>";
 			echo $row['GROUP_NAME'];
+			if ($row['SUPER_GROUP'] !== NULL) {
+				$sql2 = "SELECT *
+				FROM GROUPS
+				WHERE GROUPS.GROUP_ID = " . $row['SUPER_GROUP'];
+				$result2 = mysqli_query($db, $sql2);
+				$row2 = $result2->fetch_assoc();
+				echo "->" . $row2['GROUP_NAME'];
+			}
+			echo "<button id = 'invite' type = 'button' class = 'invite' value = " . $row['GROUP_ID'] . ">Invite</button>";
 			if (! $first) {
 				echo "<button type = 'button' class = 'groupDelete' value = " . $row['GROUP_ID'] . ">Destroy</button>";
 			}
@@ -101,8 +113,15 @@
 			if ($result2->num_rows > 0) {
 				echo "<ul>";
 				while($row2 = $result2->fetch_assoc()) {
-					echo "<li>" . $row2['USER_FIRST_NAME'] . " " . $row2['USER_LAST_NAME'];
-					echo "<button type = 'button' class = 'kickUser' value = " . $row2['USER_ID'] . "::" . $row['GROUP_ID'] . ">Kick</button></li>";
+					if ($row2['MEMBERSHIP_STATUS'] !== "REMOVED") {
+						echo "<li>" . $row2['USER_FIRST_NAME'] . " " . $row2['USER_LAST_NAME'];
+						if ($row2['MEMBERSHIP_STATUS'] == "PENDING") {
+							echo "<button type = 'button' class = 'accept' value = 'ACCEPTED::" . $row2['USER_ID'] . "::" . $row2['GROUP_ID'] . "'>Accept</button>";
+							echo "<button type = 'button' class = 'decline' value = 'REMOVED::" . $row2['USER_ID'] . "::" . $row2['GROUP_ID'] . "'>Decline</button>";
+						} else if ($row2['MEMBERSHIP_STATUS'] == "ACCEPTED") {
+							echo "<button type = 'button' class = 'kickUser' value = " . $row2['USER_ID'] . "::" . $row2['GROUP_ID'] . ">Kick</button></li>";
+						}
+					}
 				}
 				echo "</ul>";
 			}
@@ -134,6 +153,14 @@
 			echo "<div class = 'groups'>";
 			echo "<button type = 'button' class = 'groupFilter' value = " . $row['GROUP_ID'] . ">&#x2713;</button>";
 			echo $row['GROUP_NAME'];
+			if ($row['SUPER_GROUP'] !== NULL) {
+				$sql2 = "SELECT *
+				FROM GROUPS
+				WHERE GROUPS.GROUP_ID = " . $row['SUPER_GROUP'];
+				$result2 = mysqli_query($db, $sql2);
+				$row2 = $result2->fetch_assoc();
+				echo "->" . $row2['GROUP_NAME'];
+			}
 			echo "<button type = 'button' class = 'groupLeave' value = " . $row['GROUP_ID'] . ">Leave</button>";
 			echo "</div>";
 		}
@@ -149,6 +176,10 @@ kickButtons = Array.from(document.querySelectorAll(".kickUser"));
 console.log(kickButtons.length);
 leaveGroupButtons = Array.from(document.querySelectorAll(".groupLeave"));
 console.log(leaveGroupButtons.length);
+inviteButtons = Array.from(document.querySelectorAll(".invite"));
+console.log(inviteButtons.length);
+acceptDeclineButtons = Array.from(document.querySelectorAll(".accept, .decline"));
+console.log(acceptDeclineButtons.length);
 
 // adding click event to delete group buttons
 for(row of deleteGroupButtons) {
@@ -177,4 +208,20 @@ for(row of leaveGroupButtons) {
 	});
 }
 
+// adding click event to invite buttons
+for(row of inviteButtons) {
+	let val = row.value;
+	row.addEventListener('click', function() {
+		alert("Give this number to others for them to join: " + val);
+	});
+}
+
+// adding click event to accept and decline buttons
+for(row of acceptDeclineButtons) {
+	let val = row.value;
+	row.addEventListener('click', function () {
+		document.getElementById('acceptDecline').value = val;
+		document.getElementById('acceptDeclineForm').submit();
+	});
+}
 </script>
