@@ -221,17 +221,17 @@ ul, ol {
     border: 1px solid rgb(232, 232, 238);
     box-sizing: border-box;
 }
-/*
+
+
 .winter .day{
-    background: hsl(120, 14%, 97%);
+    background: hsla(120, 12%, 97%, 0.75);
 }
 .summer .day{
-    background: hsl(120, 14%, 97%);
+    background: hsla(120, 12%, 97%, 0.75);
 }
 .spring .day{
-    background:  hsl(120, 14%, 97%);
+    background:  hsla(120, 12%, 97%, 0.75);
 }
 .autumn .day{
-    background: hsl(120, 14%, 97%);
+    background: hsla(120, 12%, 97%, 0.75);
 }
-*/
