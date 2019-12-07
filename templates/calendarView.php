@@ -98,35 +98,6 @@ oReq.addEventListener("load", populateTable);
     var dayElements = [];
     var monthNames = ["January", "February", "March", "April", "May", "June",
                         "July", "August", "September", "October", "November", "December"];
-    // groupChooser = document.createElement('span');
-    // groupChooserInput = document.createElement('input');
-    // groupChooserBtn = document.createElement('btn');
-    // groupChooserBtn.innerText = 'Filter';
-    // groupChooser.appendChild(groupChooserInput);
-    // groupChooser.appendChild(groupChooserBtn);
-
-
-    // function groupFilter (e) {
-    //     v = e.value;
-    //     if(v == '') {
-    //         rows = Array.from(document.querySelectorAll('.surround'));
-    //         for(row of rows){
-    //             row.style.display = '';
-    //             //console.log(row);
-    //         }
-    //         return;
-    //         }
-    //     rows = Array.from(document.querySelectorAll('.surround.group' + v));
-    //     for(row of rows){
-    //         row.style.display = '';
-    //         //console.log(row);
-    //     }
-    //     rows = Array.from(document.querySelectorAll('.surround:not(.group' + v + ')'));
-    //     for(row of rows){
-    //         row.style.display = 'none';
-    //         //console.log(row);
-    //     }
-    // });
 
 function makeDayTable(month, year) {
     dayElements = [];

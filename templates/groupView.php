@@ -68,7 +68,7 @@
 	if ($result->num_rows > 0) {
 		while($row = $result->fetch_assoc()) {
 			echo "<div class = 'groups'>";
-			echo "<button type = 'button' class = 'groupFilter' value = " . $row['GROUP_ID'] . ">&#x2713;</button>";
+			echo "<button type = 'button' class = 'groupFilter' value = " . $row['GROUP_ID'] . ">☐</button>";
 			echo $row['GROUP_NAME'];
 			echo "<button type = 'button' class = 'groupDelete' value = " . $row['GROUP_ID'] . ">Destroy</button>";
 			echo "</div>";
@@ -115,7 +115,7 @@
 	if ($result->num_rows > 0) {
 		while($row = $result->fetch_assoc()) {
 			echo "<div class = 'groups'>";
-			echo "<button type = 'button' class = 'groupFilter' value = " . $row['GROUP_ID'] . ">&#x2713;</button>";
+			echo "<button type = 'button' class = 'groupFilter' value = " . $row['GROUP_ID'] . ">☐</button>";
 			echo $row['GROUP_NAME'];
 			echo "<button type = 'button' class = 'groupLeave' value = " . $row['GROUP_ID'] . ">Leave</button>";
 			echo "</div>";
@@ -123,3 +123,33 @@
 		echo "</ul>";
 	}
 ?>
+
+<script>
+groupFilters = Array.from(document.querySelectorAll('.groupFilter'));
+//console.log(groupFilters.length);
+function groupFilterFunc (e) {
+	v = e.value;
+	if(v == '') {
+		rows = Array.from(document.querySelectorAll('.surround'));
+		for(row of rows){
+			row.style.display = '';
+			//console.log(row);
+		}
+		return;
+		}
+	rows = Array.from(document.querySelectorAll('.surround.group' + v));
+	for(row of rows){
+		row.style.display = '';
+		//console.log(row);
+	}
+	rows = Array.from(document.querySelectorAll('.surround:not(.group' + v + ')'));
+	for(row of rows){
+		row.style.display = 'none';
+		//console.log(row);
+	}
+}
+
+for(filter of groupFilters) {
+	document.addEventListener
+}
+</script>
