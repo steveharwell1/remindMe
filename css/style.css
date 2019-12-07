@@ -86,7 +86,6 @@ tr {
     height: 18vh;
 }
 
-
 input:not([type = "radio"]) {
     border: none;
     border-bottom: 1px solid black;
@@ -144,7 +143,7 @@ ul, ol {
 }
 
 .job:hover, .job:active {
-    outline: dashed black 2px;
+    outline: dashed rgb(48, 13, 223) 2px;
 }
 
 .info, .todo, .deadline, .event {
@@ -157,11 +156,14 @@ ul, ol {
     align-items: center;
     border-radius: 50%;
     background-color:darkblue;
-    color: white;
+    color: rgb(204, 115, 13);
     width: 1.3em;
     height: 1.3em;
 }
-
+/*input, select, button{
+    background-color: rgb(252, 252, 248);
+    background-image: linear-gradient(rgb(133, 124, 124), rgb(233, 233, 136));
+}*/
 .groupDelete, .groupLeave, .kickUser {
     background-color: #dd5959; 
     margin-left: auto;
@@ -172,22 +174,64 @@ ul, ol {
 
 .groups {
     display: flex;
-     border-bottom: 1px solid black;
+     border-bottom: 1px solid rgb(14, 13, 13);
       width: 100%;
 }
 .autumn {
-    background-image: url("/css/Autumn.webp");
+    background-image: url("/css/flower.jpg");
     background-repeat: round;
+}
+.autumn input, .autumn select, .autumn button{
+    background-image: url("/css/flower.jpg");
+    background-position: right middle, left bottom;
+    background-repeat: no-repeat, repeat;
+    border: 1px solid rgb(232, 232, 238);
+    box-sizing: border-box;
 }
 .spring {
-    background-image: url("/css/Fall.webp");
-    background-repeat: round;
-}
-.summer {
     background-image: url("/css/Summer.webp");
     background-repeat: round;
+}
+.spring input, .spring select, .spring button{
+    background-image: url("/css/Summer.webp");
+    background-position: right bottom, left middle;
+    background-repeat: no-repeat, repeat;
+    border: 1px solid rgb(232, 232, 238);
+    box-sizing: border-box;
+}
+.summer {
+    background-image: url("/css/watercolour.webp");
+    background-repeat: round;
+}
+.summer input, .summer select, .summer button{
+    background-image: url("/css/watercolour.webp");
+    background-position: right middle, left bottom;
+    background-repeat: no-repeat, repeat;
+    border: 1px solid rgb(232, 232, 238);
+    box-sizing: border-box;
 }
 .winter{
     background-image: url("/css/Winter.jpg");
     background-repeat: round;
 }
+.winter input, .winter select, .winter button{
+    background-image: url("/css/Winter.jpg");
+    background-position: right middle, left bottom;
+    background-repeat: no-repeat, repeat;
+    border: 1px solid rgb(232, 232, 238);
+    box-sizing: border-box;
+}
+/*
+.winter .day{
+    background: hsl(120, 14%, 97%);
+}
+.summer .day{
+    background: hsl(120, 14%, 97%);
+}
+.spring .day{
+    background:  hsl(120, 14%, 97%);
+}
+.autumn .day{
+    background: hsl(120, 14%, 97%);
+}
+*/
