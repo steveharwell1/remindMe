@@ -77,12 +77,12 @@ function populateTable () {
         surround.classList.add('surround');
         surround.classList.add('group' + row.group);
         surround.appendChild(rowNode);
-        
-        butt = document.createElement('a');
-        butt.innerText = '🗑';
-        butt.href = '/controllers/deleteJobController.php?delete=' + row.id;
-        surround.appendChild(butt);
-        
+        if(row.owns){
+            butt = document.createElement('a');
+            butt.innerText = '🗑';
+            butt.href = '/controllers/deleteJobController.php?delete=' + row.id;
+            surround.appendChild(butt);
+        }
         index = new Date(row.date);
         
         index = index.getDate() - 1;
