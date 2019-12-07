@@ -10,8 +10,9 @@ require_once '../db/test_db.php';
 $contents = file_get_contents('php://input');
 $json = json_decode($contents);
 
+
 //Controller logic
-$id = $_SESSION['user_id'];
+$userid = $_SESSION['user_id'];
 
 //remember that if you take user input and pass it into a query that you need to sanitize the input
 //or use prepared statements.
@@ -19,22 +20,61 @@ $id = $_SESSION['user_id'];
 // $result = mysqli_query($db, $sql);
 // $count = mysqli_num_rows($result);
 
+if(isset($_POST['groupName']))
+{
+    $groupName = mysqli_real_escape_string($db, $_POST['groupName']);
+}
+else if(isset($_POST['superGroup']))
+{
+    $superGroup = mysqli_real_escape_string($db, $_POST['superGroup']);
+}
+else if(isset($_POST['deleteGroupID']))
+{
+    $deleteGroupID= mysqli_real_escape_string($db, $_POST['deleteGroupID']);
+}
+else if(isset($_POST['leaveGroupID']))
+{
+    $leaveGroupID= mysqli_real_escape_string($db, $_POST['leaveGroupID']);
+}
+else if(isset($_POST['kickUserID']))
+{
+     $kickuserID =mysqli_real_escape_string($db, $_POST['kickUserID']);
+}
+else if(isset($_POST['joinGroupID']))
+{
+    $joinGroupID = mysqli_real_escape_string($db, $_POST['joinGroupID']);
+}
 
 
-//turn sql result into php array object
-$group = Array('name' => 'Birthday Planning');
+if ($groupID !== 0) {  
+    $sql = "INSERT INTO GROUPS
+    (GROUP_ID, GROUP_NAME, GROUP_OWNER, SUPER_GROUP)
+    VALUES (NULL, '$groupName','$groupOwner' , $superGroup)";
+    $result = mysqli_query($db, $sql);
+}
 
-//Send Data at the end
-$data = Array( 'data' => $contents, 'action' => 'create');
-header('Content-Type: application/json');
-echo json_encode($data);
+
+if(!empty($deleteGroup)){
+    $sql = "SELECT * 
+    FROM 'GROUPS'
+    WHERE GROUPS.GROUP_ID = $deleteGroup";
+
+}
+
+
+
+
+
+
+
+
 
 //Insert data into the database
-$groupName = $group['name'];
-$sql = "INSERT INTO `GROUPS` 
-(`GROUP_NAME`, `GROUP_OWNER`, `SUPER_GROUP`) 
-VALUES ($groupName, $id, NULL);";
-$result = mysqli_query($db, $sql);
+//$groupName = $group['name'];
+//$sql = "INSERT INTO `GROUPS` 
+//(`GROUP_NAME`, `GROUP_OWNER`, `SUPER_GROUP`) 
+//VALUES ($groupName, $id, NULL);";
+//$result = mysqli_query($db, $sql);
 
 
 //close result array
@@ -42,3 +82,5 @@ $result = mysqli_query($db, $sql);
 
 // //close database connection
 // mysqli_close($db);
+
+?>
