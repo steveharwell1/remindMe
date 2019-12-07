@@ -23,13 +23,17 @@ $userID = $_SESSION['user_id'];
 if(isset($_POST['groupName']))
 {
     $groupName = mysqli_real_escape_string($db, $_POST['groupName']);
-    $superGroup = mysqli_real_escape_string($db, $_POST['superGroup']);
-    $sql = "INSERT INTO GROUPS
-    (GROUP_ID, GROUP_NAME, GROUP_OWNER, SUPER_GROUP)
-    VALUES (NULL, '$groupName','$userID' , $superGroup)";
+    if (isset($_POST['superGroup']) && !empty($_POST['superGroup'])) {
+        $superGroup = mysqli_real_escape_string($db, $_POST['superGroup']);
+        $sql = "INSERT INTO GROUPS
+        (GROUP_ID, GROUP_NAME, GROUP_OWNER, SUPER_GROUP)
+        VALUES (NULL, '$groupName','$userID' , '$superGroup')";
+    } else {
+        $sql = "INSERT INTO GROUPS
+        (GROUP_ID, GROUP_NAME, GROUP_OWNER, SUPER_GROUP)
+        VALUES (NULL, '$groupName','$userID' , NULL)";
+    }
     $result = mysqli_query($db, $sql);
-
-    
 }
 else if(isset($_POST['deleteGroupID']))
 {
