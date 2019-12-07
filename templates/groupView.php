@@ -9,13 +9,13 @@
 
 <!-- forms for buttons that will be connected via javascript -->
 <form id = "deleteGroupForm" action = "/controllers/groupController.php" method = "POST" style = "display: none;">
-	<input id = "deleteGroup" name = "groupID" />
+	<input id = "deleteGroup" name = "deleteGroupID" />
 </form>
 <form id = "kickUserForm" action = "/controllers/groupController.php" method = "POST" style = "display: none;">
-	<input id = "kickUser" name = "userID" />
+	<input id = "kickUser" name = "kickUserID" />
 </form>
 <form id = "leaveGroupForm" action = "/controllers/groupController.php" method = "POST" style = "display: none;">
-	<input id = "leaveGroup" name = "groupID" />
+	<input id = "leaveGroup" name = "leaveGroupID" />
 </form>
 
 <h2>GROUPS</h2>
@@ -26,7 +26,7 @@
 
 <form action = "/controllers/groupController.php" method = "post" id = "createGroupForm">
 <input type = "text" name = "groupName" placeholder = "Group Name"/>
- Super Group: <select name = "group">
+ Super Group: <select name = "superGroup">
 <?php
 	// find groups user is in
 	$sql = "SELECT * 
@@ -64,7 +64,7 @@
 	}
 ?>
 </select>
-<button type = "submit" value = "submit">Create</button>
+<button type = "submit" value = "create">Create</button>
 </form>
 
 <?php
@@ -102,7 +102,7 @@
 				echo "<ul>";
 				while($row2 = $result2->fetch_assoc()) {
 					echo "<li>" . $row2['USER_FIRST_NAME'] . " " . $row2['USER_LAST_NAME'];
-					echo "<button type = 'button' class = 'kickUser' value = " . $row['USER_ID'] . ">Kick</button></li>";
+					echo "<button type = 'button' class = 'kickUser' value = " . $row2['USER_ID'] . "::" . $row['GROUP_ID'] . ">Kick</button></li>";
 				}
 				echo "</ul>";
 			}
@@ -114,7 +114,7 @@
 <div style = "display: flex;">
 <h3>My Memberships</h3>
 <form action = "/controllers/groupController.php" method = "post" id = "joinGroupForm">
-<input type = "text" name = "groupID">
+<input type = "text" name = "joinGroupID">
 <button type = "submit" value = "join">Join</button>
 </form>
 </div>
