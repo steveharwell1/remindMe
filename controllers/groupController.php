@@ -89,17 +89,7 @@ else if(isset($_POST['acceptDeclineUserID']))
 
 }
 
-
-
-   
-
-
-
-
-
-
-
-
+header('Location: /index.php');
 
 //Insert data into the database
 //$groupName = $group['name'];
