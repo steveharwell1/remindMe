@@ -7,15 +7,26 @@
  $userid = $_SESSION['user_id'];
 ?>
 
+<!-- forms for buttons that will be connected via javascript -->
+<form id = "deleteGroupForm" action = "/controllers/groupController.php" method = "GET" style = "display: none;">
+	<input id = "deleteGroup" name = "groupID" />
+</form>
+<form id = "kickUserForm" action = "/controllers/groupController.php" method = "POST" style = "display: none;">
+	<input id = "kickUser" name = "userID" />
+</form>
+<form id = "leaveGroupForm" action = "/controllers/groupController.php" method = "POST" style = "display: none;">
+	<input id = "leaveGroup" name = "groupID" />
+</form>
+
 <h2>GROUPS</h2>
 <div style = "display: flex;">
 <h3>My Groups</h3>
 <button type = "button" id = "createGroup">+</button>
 </div>
 
-<form action = "/controllers/groupController" method = "post" id = "createGroupForm">
+<form action = "/controllers/groupController.php" method = "post" id = "createGroupForm">
 <input type = "text" name = "groupName" placeholder = "Group Name"/>
-<select name = "group">
+ Super Group: <select name = "group">
 <?php
 	// find groups user is in
 	$sql = "SELECT * 
@@ -53,7 +64,7 @@
 	}
 ?>
 </select>
-<button type = "submit" value = "submit">Submit</button>
+<button type = "submit" value = "submit">Create</button>
 </form>
 
 <?php
@@ -65,15 +76,21 @@
 	$result = mysqli_query($db, $sql);
 
 	// display result
+	$first = true;
 	if ($result->num_rows > 0) {
 		while($row = $result->fetch_assoc()) {
 			echo "<div class = 'groups'>";
 			echo "<button type = 'button' class = 'groupFilter' value = " . $row['GROUP_ID'] . ">&#x2713;</button>";
 			echo $row['GROUP_NAME'];
-			echo "<button type = 'button' class = 'groupDelete' value = " . $row['GROUP_ID'] . ">Destroy</button>";
+			if (! $first) {
+				echo "<button type = 'button' class = 'groupDelete' value = " . $row['GROUP_ID'] . ">Destroy</button>";
+			}
+			else {
+				$first = false;
+			}
 			echo "</div>";
 
-			//find user in group
+			//find users in group
 			$sql2 = "SELECT *
 			FROM USERS_GROUPS
 			INNER JOIN USERS
@@ -84,20 +101,19 @@
 			if ($result2->num_rows > 0) {
 				echo "<ul>";
 				while($row2 = $result2->fetch_assoc()) {
-					echo "<li>" . $row2['USER_FIRST_NAME'] . " " . $row2['USER_LAST_NAME'] . "</li>";
-					echo "<button type = 'button' class = 'kickUser' value = " . $row['USER_ID'] . ">Kick</button>";
+					echo "<li>" . $row2['USER_FIRST_NAME'] . " " . $row2['USER_LAST_NAME'];
+					echo "<button type = 'button' class = 'kickUser' value = " . $row['USER_ID'] . ">Kick</button></li>";
 				}
 				echo "</ul>";
 			}
 		}
-		echo "</ul>";
 	}
 ?>
 
 <br>
 <div style = "display: flex;">
 <h3>My Memberships</h3>
-<form action = "/controllers/groupController" method = "post" id = "joinGroupForm">
+<form action = "/controllers/groupController.php" method = "post" id = "joinGroupForm">
 <input type = "text" name = "groupID">
 <button type = "submit" value = "join">Join</button>
 </form>
@@ -124,3 +140,41 @@
 		echo "</ul>";
 	}
 ?>
+
+<script>
+//create arrays for each group of buttons created
+deleteGroupButtons = Array.from(document.querySelectorAll(".groupDelete"));
+console.log(deleteGroupButtons.length);
+kickButtons = Array.from(document.querySelectorAll(".kickUser"));
+console.log(kickButtons.length);
+leaveGroupButtons = Array.from(document.querySelectorAll(".groupLeave"));
+console.log(leaveGroupButtons.length);
+
+// adding click event to delete group buttons
+for(row of deleteGroupButtons) {
+	let val = row.value;
+	row.addEventListener('click', function () {
+		document.getElementById('deleteGroup').value = val;
+		document.getElementById('deleteGroupForm').submit();
+	});
+}
+
+// adding click event to kick user buttons
+for(row of kickButtons) {
+	let val = row.value;
+	row.addEventListener('click', function () {
+		document.getElementById('kickUser').value = val;
+		document.getElementById('kickUserForm').submit();
+	});
+}
+
+// adding click event to leave group buttons
+for(row of leaveGroupButtons) {
+	let val = row.value;
+	row.addEventListener('click', function () {
+		document.getElementById('leaveGroup').value = val;
+		document.getElementById('leaveGroupForm').submit();
+	});
+}
+
+</script>

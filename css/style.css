@@ -163,8 +163,11 @@ ul, ol {
 }
 
 .groupDelete, .groupLeave, .kickUser {
-    background-color: #b34d4d; 
+    background-color: #dd5959; 
     margin-left: auto;
+    color: black;
+    padding: .2em .5em;
+    align-self: flex-start;
 }
 
 .groups {
