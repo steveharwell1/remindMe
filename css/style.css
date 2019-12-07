@@ -4,9 +4,24 @@
 }
 :root {
     color: rgb(0, 0, 20);
-    background: #e8e8e8;
+    /* #e69696;*/
 }
-
+.autumn {
+    background-image: url("css/Autumn.webp");
+    background-repeat: round;
+}
+.spring {
+    background-image: url("/css/Fall.webp");
+    background-repeat: round;
+}
+.summer {
+    background-image: url("/css/Summer.webp");
+    background-repeat: round;
+}
+.winter{
+    background-image: url("/css/Winter.jpg");
+    background-repeat: round;
+}
 nav {
     height: 100%; 
     display: flex;
