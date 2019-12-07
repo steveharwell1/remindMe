@@ -208,4 +208,10 @@
     document.getElementById("Cancel").onclick = function () {
         location.href = "/index.php";
     };
+
+    var monthImages = ["winter", "winter", "spring", "spring", "spring", "summer",
+                        "summer", "summer", "autumn", "autumn", "autumn", "winter"];
+
+    document.getElementsByTagName('html')[0].classList.add(monthImages[<?php echo date('m', $jobDate) ?> -1]);
+
 </script>
