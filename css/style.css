@@ -6,22 +6,7 @@
     color: rgb(0, 0, 20);
     /* #e69696;*/
 }
-.autumn {
-    background-image: url("/css/Autumn.webp");
-    background-repeat: round;
-}
-.spring {
-    background-image: url("/css/Fall.webp");
-    background-repeat: round;
-}
-.summer {
-    background-image: url("/css/Summer.webp");
-    background-repeat: round;
-}
-.winter{
-    background-image: url("/css/Winter.jpg");
-    background-repeat: round;
-}
+
 nav {
     height: 100%; 
     display: flex;
@@ -189,4 +174,20 @@ ul, ol {
     display: flex;
      border-bottom: 1px solid black;
       width: 100%;
+}
+.autumn {
+    background-image: url("/css/Autumn.webp");
+    background-repeat: round;
+}
+.spring {
+    background-image: url("/css/Fall.webp");
+    background-repeat: round;
+}
+.summer {
+    background-image: url("/css/Summer.webp");
+    background-repeat: round;
+}
+.winter{
+    background-image: url("/css/Winter.jpg");
+    background-repeat: round;
 }
