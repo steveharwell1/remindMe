@@ -12,7 +12,7 @@ $json = json_decode($contents);
 
 
 //Controller logic
-$userid = $_SESSION['user_id'];
+$userID = $_SESSION['user_id'];
 
 //remember that if you take user input and pass it into a query that you need to sanitize the input
 //or use prepared statements.
@@ -23,10 +23,13 @@ $userid = $_SESSION['user_id'];
 if(isset($_POST['groupName']))
 {
     $groupName = mysqli_real_escape_string($db, $_POST['groupName']);
-}
-else if(isset($_POST['superGroup']))
-{
     $superGroup = mysqli_real_escape_string($db, $_POST['superGroup']);
+    $sql = "INSERT INTO GROUPS
+    (GROUP_ID, GROUP_NAME, GROUP_OWNER, SUPER_GROUP)
+    VALUES (NULL, '$groupName','$userID' , $superGroup)";
+    $result = mysqli_query($db, $sql);
+
+    
 }
 else if(isset($_POST['deleteGroupID']))
 {
@@ -46,12 +49,9 @@ else if(isset($_POST['joinGroupID']))
 }
 
 
-if ($groupID !== 0) {  
-    $sql = "INSERT INTO GROUPS
-    (GROUP_ID, GROUP_NAME, GROUP_OWNER, SUPER_GROUP)
-    VALUES (NULL, '$groupName','$groupOwner' , $superGroup)";
-    $result = mysqli_query($db, $sql);
-}
+
+   
+
 
 
 if(!empty($deleteGroup)){
