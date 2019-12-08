@@ -203,37 +203,37 @@ ul, ol {
       width: 100%;
 }
 
-.autumn {
+.spring {
     background-image: url("/css/flower.jpg");
     background-repeat: no-repeat;
     background-size: cover;
 }
-.autumn input, .autumn select, .autumn button{
-    background-image: url("/css/flower.jpg");
+.spring input, .spring select, .spring button{
+    background-color: rgb(255, 255, 255, .95);
     background-position: right middle, left bottom;
     background-repeat: no-repeat, repeat;
     border: 1px solid rgb(232, 232, 238);
     box-sizing: border-box;
 }
-.spring {
-    background-image: url("/css/Summer.webp");
+.autumn {
+    background-image: url("/css/Fall.webp");
     background-repeat: no-repeat;
     background-size: cover;
 }
-.spring input, .spring select, .spring button{
-    background-image: url("/css/Summer.webp");
+.autumn input, .autumn select, .autumn button{
+    background-color: rgb(255, 255, 255, .95);
     background-position: right bottom, left middle;
     background-repeat: no-repeat, repeat;
     border: 1px solid rgb(232, 232, 238);
     box-sizing: border-box;
 }
 .summer {
-    background-image: url("/css/watercolour.webp");
+    background-image: url("/css/Summer.webp");
     background-repeat: no-repeat;
     background-size: cover;
 }
 .summer input, .summer select, .summer button{
-    background-image: url("/css/watercolour.webp");
+    background-color: rgb(255, 255, 255, .95);
     background-position: right middle, left bottom;
     background-repeat: no-repeat, repeat;
     border: 1px solid rgb(232, 232, 238);
@@ -245,7 +245,7 @@ ul, ol {
     background-size: cover;
 }
 .winter input, .winter select, .winter button{
-    background-image: url("/css/Winter.jpg");
+    background-color: rgb(255, 255, 255, .95);
     background-position: right middle, left bottom;
     background-repeat: no-repeat, repeat;
     border: 1px solid rgb(232, 232, 238);
@@ -256,10 +256,10 @@ ul, ol {
 .winter .day{
     background: hsla(120, 12%, 97%, 0.75);
 }
-.summer .day{
+.spring .day{
     background: hsla(120, 12%, 97%, 0.75);
 }
-.spring .day{
+.summer .day{
     background:  hsla(120, 12%, 97%, 0.75);
 }
 .autumn .day{
