@@ -10,10 +10,11 @@
     //post from clicking on reminder on calendar
     $id = 0;
     $title = "";
+    date_default_timezone_set('America/Chicago');
     $jobDate = date('m/d/Y');
     $jobTime = date('H:i');
     $reminderDate = date('m/d/Y');
-    $reminderTime = date('H:i');
+    $reminderTime = date();
     //$repeat;
     $type = "";
     $groupID = 0;
@@ -30,12 +31,12 @@
             $row = $result->fetch_assoc();
             $title = htmlspecialchars($row['TITLE']);
             $jobDateTime = $row['DUE_DATE'];
-            $jobDate = date('Y-m-d', strtotime($jobDateTime));
-            $jobTime = date('H:i', strtotime($jobDateTime));
+            $jobDate = date('Y-m-d', strtotime($jobDateTime . " UTC"));
+            $jobTime = date('H:i', strtotime($jobDateTime . " UTC" . ''));
             if ($row['REMINDER_TIME'] !== NULL) {
                 $reminderDateTime = $row['REMINDER_TIME'];
-                $reminderDate = date('Y-m-d', strtotime($reminderDateTime));
-                $reminderTime = date('H:i', strtotime($reminderDateTime));
+                $reminderDate = date('Y-m-d', strtotime($reminderDateTime." UTC"));
+                $reminderTime = date('H:i', strtotime($reminderDateTime." UTC" . ''));
             }
             //$repeat;
             $type = $row['JOB_TYPE'];
@@ -62,7 +63,7 @@
     <input type = "date" name = "duedate" value = "<?php echo $jobDate; ?>" required/>
     <?php 
         if(isset($_POST['reminderID']) && !empty($_POST['reminderID'])) {
-            echo "<input type = 'time' name = 'duetime' value = " . $jobTime . "required>";
+            echo "<input type = 'time' name = 'duetime' value = " . $jobTime . " required>";
         }
         else {
             echo "<input type = 'time' name = 'duetime' value = '12:00' required>";
@@ -75,7 +76,7 @@
     <input type = "date" name = "remindDate" value = "<?php echo $reminderDate; ?>" required/>
     <?php 
         if(isset($_POST['reminderID']) && !empty($_POST['reminderID'])) {
-            echo "<input type = 'time' name = 'remindTime' value = " . $reminderTime . "required>";
+            echo "<input type = 'time' name = 'remindTime' value = " . $reminderTime . " required>";
         }
         else {
             echo "<input type = 'time' name = 'remindTime' value = '12:00' required>";
@@ -207,4 +208,10 @@
     document.getElementById("Cancel").onclick = function () {
         location.href = "/index.php";
     };
+
+    var monthImages = ["winter", "winter", "spring", "spring", "spring", "summer",
+                        "summer", "summer", "autumn", "autumn", "autumn", "winter"];
+
+    document.getElementsByTagName('html')[0].classList.add(monthImages[<?php echo date('m', strtotime($jobDate)) ?> -1]);
+
 </script>
