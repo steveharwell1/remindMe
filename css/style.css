@@ -265,3 +265,8 @@ ul, ol {
 .autumn .day{
     background: hsla(120, 12%, 97%, 0.75);
 }
+
+.hide {
+    display: none;
+}
+
