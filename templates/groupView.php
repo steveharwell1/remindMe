@@ -27,7 +27,7 @@
 <button type = "button" id = "createGroup">+</button>
 </div>
 
-<form action = "/controllers/groupController.php" method = "post" id = "createGroupForm">
+<form action = "/controllers/groupController.php" method = "post" id = "createGroupForm" class="hide">
 <input type = "text" name = "groupName" placeholder = "Group Name"/>
  Super Group: <select name = "superGroup">
 <?php
@@ -261,4 +261,13 @@ for(row of acceptDeclineButtons) {
 		document.getElementById('acceptDeclineForm').submit();
 	});
 }
+
+document.getElementById('createGroup').addEventListener('click', function() {
+	form = document.getElementById('createGroupForm');
+	if(form.classList.contains('hide')) {
+		form.classList.remove('hide');
+	} else {
+		form.classList.add('hide');
+	}
+});
 </script>
