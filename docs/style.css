@@ -1,0 +1,13 @@
+.container {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.container figure {
+    flex-basis: 1 1 100%;
+    padding: 2em;
+    background: #e8e8e8;
+}
+img {
+    width: 100%;
+}
