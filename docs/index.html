@@ -37,6 +37,11 @@
   </ul>
 
 <h2>Project diagrams<a href = ""></a></h2>
+<p>
+Please move your mouse to an image on the left to see it on the right.
+Scroll down through the images to see them all.
+</p>
+<div class="outer-container">
 <div class="container">
   <figure>
     <img src="AddJobToQueue.png">
@@ -110,6 +115,21 @@
     <img src="Update Reminder.PNG">
     <figcaption>Update Reminder</figcaption>
   </figure>
-<div>
+</div>
+<img id="picContainer" src="AddJobToQueue.png">
+</div>
+<script>
+var picCon = document.getElementById('picContainer');
+
+figs = document.querySelectorAll('figure');
+for( let fig of figs ){
+  let source = fig.querySelector('img').src;
+  fig.addEventListener('mouseover', function () {
+
+    picCon.src = source;
+  });
+}
+</script>
+
 </body>
 </html>
